@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolivier <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*   By: jolivier <jolivier@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/18 17:34:47 by jolivier          #+#    #+#             */
-/*   Updated: 2022/07/18 17:34:49 by jolivier         ###   ########.fr       */
+/*   Created: 2022/08/23 10:16:53 by jolivier          #+#    #+#             */
+/*   Updated: 2022/08/23 10:16:53 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
-
+char	*ft_strdup(const char *s)
 {
 	unsigned int	i;
+	char			*c;
 
 	i = 0;
-	while (src[i] != '\0' && i + 1 < size)
+	c = malloc(sizeof(char) * (ft_strlen((char *)s) + 1));
+	while (s[i] != '\0')
 	{
-		dest[i] = src[i];
+		c[i] = s[i];
 		i++;
 	}
-	if (i < size)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (ft_strlen(src));
+	c[i] = '\0';
+	return (c);
 }

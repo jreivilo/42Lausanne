@@ -3,7 +3,7 @@ OBJS = ${SRCS:.c=.o}
 HEADERS = include/
 NAME = bsq
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 GCC = gcc
 
 .c.o:	
