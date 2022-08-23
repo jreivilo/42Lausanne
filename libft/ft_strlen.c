@@ -9,9 +9,10 @@
 /*   Updated: 2022/07/16 17:31:13 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
 
-int	ft_strlen(char *str)
+#include "libft.h"
+
+size_t	ft_strlen(char *str)
 {
 	int	i;
 
@@ -22,9 +23,3 @@ int	ft_strlen(char *str)
 	}
 	return (i);
 }
-/*
-int main()
-{
-	ft_strlen("Hello World");
-}
-*/

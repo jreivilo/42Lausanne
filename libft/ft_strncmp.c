@@ -27,11 +27,11 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 	{
 		i++;
 	}
-	if (s1[i] == s2[i])
+	if ((unsigned char) s1[i] == (unsigned char) s2[i])
 	{
 		return (0);
 	}
-	if (s1[i] < s2[i])
+	if ((unsigned char) s1[i] < (unsigned char) s2[i])
 	{
 		return (-1);
 	}
@@ -40,10 +40,3 @@ int	ft_strncmp(char *s1, char *s2, unsigned int n)
 		return (1);
 	}
 }
-/*
-int main()
-{
-    printf("Result:%i\n", ft_strncmp("12", "12d", 3));
-	printf("Result:%i\n", strncmp("12", "12d", 3));
-}
-*/

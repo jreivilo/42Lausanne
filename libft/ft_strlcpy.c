@@ -10,21 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-
-int	ft_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
+#include "libft.h"
 
 unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 
@@ -32,31 +18,28 @@ unsigned int	ft_strlcpy(char *dest, char *src, unsigned int size)
 	unsigned int	i;
 
 	i = 0;
-	while (src[i] != '\0' && i < size)
+	while (src[i] != '\0' && i + 1 < size)
 	{
 		dest[i] = src[i];
 		i++;
 	}
-	while (i < size)
+	if (i < size)
 	{
 		dest[i] = '\0';
 		i++;
 	}
-	return (ft_len(src));
+	return (ft_strlen(src));
 }
 /*
 int main(void)
 {
-	char a[20] = "erfwewr";
-	char b[20] = "fsd";
-	printf("%u\n", ft_strlcpy(a, b, 10));
+	char a[20] = "";
+	char b[20] = "lorem";
+	printf("%u\n", ft_strlcpy(a, b, 3));
 	printf("%s\n", a);
-	printf("%ld\n", strlcpy(a, b, 10));
-	printf("%s\n", a);
+	char c[20] = "";
+	char d[20] = "lorem";
+	printf("%d\n", strlcpy(c, d, 3));
+	printf("%s\n", c);
 }
-*/
-/*
-strlcpy() copies up to dstsize - 1 characters from the string 
-src to dst, NUL-terminating the
-result if dstsize is not 0.
 */
