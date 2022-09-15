@@ -1,31 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolivier <jolivier@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/23 10:16:53 by jolivier          #+#    #+#             */
-/*   Updated: 2022/08/23 10:16:53 by jolivier         ###   ########.fr       */
+/*   Created: 2022/09/05 12:50:20 by jolivier          #+#    #+#             */
+/*   Updated: 2022/09/05 12:50:20 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	unsigned int	i;
-	char			*c;
+	char	*str;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
 	i = 0;
-	c = malloc(sizeof(char) * (ft_strlen((char *)s) + 1));
-	if (c == NULL)
+	j = 0;
+	k = 0;
+	if (s1[0] == '\0' || set[0] == '\0')
 		return (NULL);
-	while (s[i] != '\0')
-	{
-		c[i] = s[i];
+	while (s1[i] != '\0' && ft_strchr(set, s1[i]) != NULL)
 		i++;
-	}
-	c[i] = '\0';
-	return (c);
+	while (s1[i + j] != '\0')
+		j++;
+	while (j && ft_strchr(set, s1[i + j - 1]) != NULL)
+		j--;
+	str = (char *)malloc(sizeof(char) * (j + 1));
+	if (str == NULL)
+		return (NULL);
+	while (k < j)
+		str[k++] = s1[i++];
+	str[k] = '\0';
+	return (str);
 }

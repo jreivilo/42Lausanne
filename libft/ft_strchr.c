@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolivier <jolivier@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/19 22:41:04 by jolivier          #+#    #+#             */
-/*   Updated: 2022/08/19 22:41:04 by jolivier         ###   ########.fr       */
+/*   Created: 2022/09/05 11:08:29 by jolivier          #+#    #+#             */
+/*   Updated: 2022/09/05 11:08:29 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char	*big, const char *little, size_t len)
+char	*ft_strchr(const char *str, int c)
 {
-	size_t	i;
-	size_t	n;
+	int	i;
 
 	i = 0;
-	n = 0;
-	if (little[0] == '\0')
+	while (str[i] != '\0')
 	{
-		return ((char *)big);
-	}
-	while (big[i] != '\0' && i < len)
-	{
-		while (big[i + n] == little[n] && i + n < len)
+		if (str[i] == c)
 		{
-			if (little[n + 1] == '\0')
-			{
-				return ((char *)big + i);
-			}
-		n++;
+			return ((char *)str + i);
 		}
-		n = 0;
 		i++;
+	}
+	if (str[i] == c)
+	{
+		return ((char *)str + i);
 	}
 	return ((void *)0);
 }

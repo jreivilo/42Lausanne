@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolivier <jolivier@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/19 22:41:04 by jolivier          #+#    #+#             */
-/*   Updated: 2022/08/19 22:41:04 by jolivier         ###   ########.fr       */
+/*   Created: 2022/09/05 10:50:27 by jolivier          #+#    #+#             */
+/*   Updated: 2022/09/05 10:50:27 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char	*big, const char *little, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
+	char	*str;
 	size_t	i;
-	size_t	n;
 
 	i = 0;
-	n = 0;
-	if (little[0] == '\0')
+	if (s == NULL)
 	{
-		return ((char *)big);
+		return (NULL);
 	}
-	while (big[i] != '\0' && i < len)
+	if (start >= ft_strlen((char *)s))
 	{
-		while (big[i + n] == little[n] && i + n < len)
-		{
-			if (little[n + 1] == '\0')
-			{
-				return ((char *)big + i);
-			}
-		n++;
-		}
-		n = 0;
+		return (ft_strdup(""));
+	}
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+	while (i < len)
+	{
+		str[i] = s[start + i];
 		i++;
 	}
-	return ((void *)0);
+	str[i] = '\0';
+	return (str);
 }
