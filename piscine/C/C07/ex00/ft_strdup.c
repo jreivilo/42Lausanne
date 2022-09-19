@@ -45,7 +45,5 @@ int main()
 	write(1, ft_strdup(c), 1);
 	printf("R:%s", ft_strdup(c));
 	return(0);
-
-
 }
 */
