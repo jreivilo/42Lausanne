@@ -23,7 +23,7 @@ size_t	ft_strlen(char *str)
 	}
 	return (i);
 }
-/*
+
 int	total(char *s1, char *s2)
 {
 	int	total;
@@ -57,7 +57,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str[i] = '\0';
 	return (str);
 }
-*/
+
 char	*ft_strdup(const char *s)
 {
 	unsigned int	i;

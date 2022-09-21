@@ -13,37 +13,41 @@
 
 char *get_next_line(int fd)
 {
-	char *temp;
+	char temp[BUFFER_SIZE + 1];
 	char *line;
-	int count;
+	char *fline;
 	int size;
 	int i;
 
-	count = 0;
+	i = 0;
 	size = 1;
+	line = (char *)malloc(sizeof(char) * 1);
+	if (line == NULL)
+		return (NULL);
 
-	while (size > 0 && temp[count + i] != '\0')
+	while (size > 0)
 	{
+		size = read(fd, &temp, BUFFER_SIZE);
+		temp[size] = '\0';
+		//printf("size = %d\n", size);
 		i = 0;
-		size = read(fd, &temp[count], BUFFER_SIZE);
-		count = count + size;
-
-		while (temp[count + i] != '\n' && temp[count + i] != '\0')
+		while(i < size)
 		{
+			if(temp[i] == '\n')
+			{
+				temp[i] = '\0';
+				line = ft_strjoin(line, temp);
+				fline = ft_strdup(line);
+				return (fline);
+			}
 			i++;
 		}
-		if (temp[count + i] == '\n')
-		{
-			temp[count + i] == '\0';
-			printf("OUT");
-			break;
-		}
+		line = ft_strjoin(line, temp);
 	}
-	//line = ft_strdup(temp);
-	return (temp);
+	fline = ft_strdup(line);
+	return (fline);
 }
-
-
+/*
 int main(int argc, char **argv)
 {
 	int fd;
@@ -51,6 +55,7 @@ int main(int argc, char **argv)
 
 	fd = open(argv[1], O_RDONLY);
 	line = get_next_line(fd);
-	printf("L:%s\n", line);
+	printf("R:%s\n", line);
 	return (0);
 }
+*/

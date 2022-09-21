@@ -18,8 +18,9 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-//char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s);
 size_t	ft_strlen(char *str);
+char *get_next_line(int fd);
 
 #endif
