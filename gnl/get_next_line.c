@@ -49,17 +49,18 @@ char *get_next_line(int fd)
 		line = ft_strjoin(line, temp);
 	}
 	fline = ft_strdup(line);
+	free(line);
 	return (fline);
 }
 
-// int main(int argc, char **argv)
-// {
-// 	int fd;
-// 	char *line;
+int main(int argc, char **argv)
+{
+	int fd;
+	char *line;
 
-// 	fd = open(argv[1], O_RDONLY);
-// 	line = get_next_line(fd);
-// 	printf("R:%s\n", line);
-// 	return (0);
-// }
+	fd = open(argv[1], O_RDONLY);
+	line = get_next_line(fd);
+	printf("R:%s\n", line);
+	return (0);
+}
 
