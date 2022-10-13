@@ -17,6 +17,8 @@ void	*ft_memmove(void *str1, const void *str2, size_t n)
 	size_t	i;
 
 	i = 0;
+	if (str1 == NULL && str2 == NULL)
+		return (NULL);
 	if (str1 < str2)
 	{
 		while (i < n)
