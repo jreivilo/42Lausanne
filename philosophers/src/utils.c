@@ -18,5 +18,18 @@ long long	timestamp(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-    // return(gettimeofday(&tv, NULL));
+}
+
+long long	time_diff(long long int start, long long int end)
+{
+	return (end - start);
+}
+
+void	milisleep(long long milisec)
+{
+	long long	start;
+
+	start = timestamp();
+	while (time_diff(start, timestamp()) < milisec)
+		usleep(100);
 }

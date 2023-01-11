@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philosophers.h"
+#include "philosophers.h"
 
-void free_mutex(t_rules *rules)
+void	free_mutex(t_rules *rules)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ void free_mutex(t_rules *rules)
 	free(rules->forks);
 }
 
-void free_philo(t_rules *rules)
+void	free_philo(t_rules *rules)
 {
 	free(rules->philo);
 }
