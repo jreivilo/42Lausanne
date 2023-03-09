@@ -19,7 +19,7 @@
 
 char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(char *str);
+// size_t	ft_strlen(char *str);
 int		total(char *s1, char *s2);
 char	*ft_strdup(const char *s);
 char	*ft_strchr(const char *s, int c);

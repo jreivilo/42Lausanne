@@ -1,0 +1,20 @@
+R 500 500
+NO textures/north.xpm
+
+
+SO textures/south.xpm
+WE textures/west.xpm
+EA textures/east.xpm
+S textures/stripe.xpm
+ST textures/sky_1.xpm
+FT textures/floor_1.xpm
+F q
+C 51,198,227
+1111111111
+1000000001
+1000000001
+100000S001
+1000110101
+1000112111
+1000011101
+1111111111
