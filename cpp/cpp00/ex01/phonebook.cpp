@@ -1,14 +1,15 @@
 #include "phonebook.hpp"
+# include <string>
 
 Phonebook::Phonebook()
 {
     this->index = 0;
-    std::cout << "PhoneBook constructor called!" << std::endl;
+    // std::cout << "PhoneBook constructor called!" << std::endl;
 }
 
 Phonebook::~Phonebook()
 {
-	std::cout << "PhoneBook destructor called!" << std::endl;
+	// std::cout << "PhoneBook destructor called!" << std::endl;
 }
 
 
@@ -28,9 +29,9 @@ void	Phonebook::add_contact()
 	{
 		std::cout << "Enter first name: ";
 		std::getline(std::cin, first_name);
-		if (first_name.length())
+		if (first_name.length() && first_name.find_first_not_of("0123456789") != std::string::npos)
 		{
-			contacts[index].set_first_name(first_name);
+			contacts[index % 8].set_first_name(first_name);
 			valid = 1;
 		}
 		else
@@ -43,7 +44,7 @@ void	Phonebook::add_contact()
 		std::getline(std::cin, last_name);
 		if (last_name.length())
 		{
-			contacts[index].set_last_name(last_name);
+			contacts[index % 8].set_last_name(last_name);
 			valid = 1;
 		}
 		else
@@ -56,7 +57,7 @@ void	Phonebook::add_contact()
 		std::getline(std::cin, nickname);
 		if (nickname.length())
 		{
-			contacts[index].set_nickname(nickname);
+			contacts[index % 8].set_nickname(nickname);
 			valid = 1;
 		}
 		else
@@ -69,7 +70,7 @@ void	Phonebook::add_contact()
 		std::getline(std::cin, login);
 		if (login.length())
 		{
-			contacts[index].set_login(login);
+			contacts[index % 8].set_login(login);
 			valid = 1;
 		}
 		else
@@ -80,9 +81,10 @@ void	Phonebook::add_contact()
 	{
 		std::cout << "Enter phone number: ";
 		std::getline(std::cin, phone_number);
-		if (phone_number.length())
+		//check is a number
+		if (phone_number.length() && phone_number.find_first_not_of("0123456789") == std::string::npos)
 		{
-			contacts[index].set_phone_number(phone_number);
+			contacts[index % 8].set_phone_number(phone_number);
 			valid = 1;
 		}
 		else
@@ -95,7 +97,7 @@ void	Phonebook::add_contact()
 		std::getline(std::cin, darkest_secret);
 		if (darkest_secret.length())
 		{
-			contacts[index].set_darkest_secret(darkest_secret);
+			contacts[index % 8].set_darkest_secret(darkest_secret);
 			valid = 1;
 		}
 		else
@@ -104,13 +106,73 @@ void	Phonebook::add_contact()
 	this->index++;
 }
 
+void	Phonebook::search_contact()
+{
+	int i;
+	int index;
+	std::string index_str;
+
+	i = 0;
+	index = 0;
+	if (this->index == 0)
+	{
+		std::cout << "No contacts to display" << std::endl;
+		return ;
+	}
+	while (i < this->index && i < 8)
+	{
+		std::cout << std::setw(10) << i << "|";
+		if (contacts[i].get_first_name().length() > 10)
+			std::cout << std::setw(10) << contacts[i].get_first_name().substr(0, 9) << "." << "|";
+		else
+			std::cout << std::setw(10) << contacts[i].get_first_name() << "|";
+		if (contacts[i].get_last_name().length() > 10)
+			std::cout << std::setw(10) << contacts[i].get_last_name().substr(0, 9) << "." << "|";
+		else
+			std::cout << std::setw(10) << contacts[i].get_last_name() << "|";
+		if (contacts[i].get_nickname().length() > 10)
+			std::cout << std::setw(10) << contacts[i].get_nickname().substr(0, 9) << "." << "|";
+		else
+			std::cout << std::setw(10) << contacts[i].get_nickname() << "|";
+		std::cout << std::endl;
+		i++;
+	}
+	std::cout << "Enter index: ";
+	std::getline(std::cin, index_str);
+	index = index_str[0] - '0';
+	
+	if (index < 0 || index > 7)
+	{
+		std::cout << "Invalid index" << std::endl;
+		return ;
+	}
+	if (index >= this->index)
+	{
+		std::cout << "No contact at this index" << std::endl;
+		return ;
+	}
+	std::cout << std::endl;
+	std::cout << "Index: " << index << std::endl;
+	std::cout << "First name: " << contacts[index].get_first_name() << std::endl;
+	std::cout << "Last name: " << contacts[index].get_last_name() << std::endl;
+	std::cout << "Nickname: " << contacts[index].get_nickname() << std::endl;
+	std::cout << "Login: " << contacts[index].get_login() << std::endl;
+	std::cout << "Phone number: " << contacts[index].get_phone_number() << std::endl;
+	std::cout << std::endl;
+}
+
 int main()
 {
 	Phonebook phonebook;
 	std::string command;
 
+	std::cout << "Welcome to the Phonebook!" << std::endl;
+
 	while (1)
 	{
+		if (std::cin.eof())
+			break ;
+		std::cout << "Available commands: ADD, SEARCH, EXIT" << std::endl;
 		std::cout << "Enter command: ";
 		std::getline(std::cin, command);
 		if (command == "EXIT")
@@ -123,7 +185,6 @@ int main()
 			break ;
 		else
 			std::cout << "Invalid command" << std::endl;
-
 	}
 	return (0);
 }

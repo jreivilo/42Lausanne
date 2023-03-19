@@ -1,6 +1,6 @@
-NAME = phonebook
+NAME = Moar_brainz
 
-SRC		=	contact.cpp phonebook.cpp
+SRC		= main.cpp Zombie.cpp  ZombieHorde.cpp
 
 CC 		= c++
 

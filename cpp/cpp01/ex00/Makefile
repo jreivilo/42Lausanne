@@ -1,6 +1,6 @@
-NAME = phonebook
+NAME = BraiiiiiiinnnzzzZ
 
-SRC		=	contact.cpp phonebook.cpp
+SRC		= main.cpp Zombie.cpp  newZombie.cpp randomChump.cpp
 
 CC 		= c++
 

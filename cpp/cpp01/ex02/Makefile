@@ -1,6 +1,6 @@
-NAME = phonebook
+NAME = HI_THIS_IS_BRAIN
 
-SRC		=	contact.cpp phonebook.cpp
+SRC		= main.cpp 
 
 CC 		= c++
 

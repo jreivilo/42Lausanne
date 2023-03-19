@@ -1,6 +1,6 @@
-NAME = phonebook
+NAME = Unnecessary_violence
 
-SRC		=	contact.cpp phonebook.cpp
+SRC		= main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
 
 CC 		= c++
 
