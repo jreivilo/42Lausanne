@@ -42,3 +42,20 @@ void	Harl::error(void)
 {
 	std::cout << "I'm an error message" << std::endl;
 }
+
+
+//void	Karen::complain(std::string level)
+// {
+// 	void		(Karen::*ptr_complain[4])(void) = {&Karen::debug, &Karen::info, &Karen::warning, &Karen::error};
+// 	std::string	levels[4] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+
+// 	for (int i = 0; i < 4; i++)
+// 	{
+// 		if (levels[i] == level)
+// 		{
+// 			(this->*ptr_complain[i])();
+// 			break ;
+// 		}
+// 	}
+// }
+//
