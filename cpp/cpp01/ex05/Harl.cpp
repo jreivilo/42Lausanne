@@ -59,3 +59,6 @@ void	Harl::error(void)
 // 	}
 // }
 //
+
+// This line declares an array of four pointers to class member functions of Karen. 
+// The member functions are debug(), info(), warning(), and error(). The array is named ptr_complain.

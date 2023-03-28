@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <cmath>
 
 
 class Fixed
@@ -13,10 +14,19 @@ class Fixed
 	public:
 		Fixed();
 		~Fixed();
+
 		Fixed( Fixed const & src ); //copy constructor
+		Fixed( int const raw ); //copy constructor convert int to fixed
+		Fixed( float const raw ); //copy constructor convert float to fixed
+
 		Fixed & operator=( Fixed const & rhs ); //assignment operator overload (assignation operator) //rhs = right hand side
+		Fixed & operator<<( Fixed const & rhs ); //assignment operator overload (assignation operator) //rhs = right hand side
+
 		int		getRawBits( void ) const;
 		void	setRawBits( int const raw );
+
+		float	toFloat( void ) const;
+		int		toInt( void ) const;
 };
 
 
