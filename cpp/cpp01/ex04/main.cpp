@@ -63,7 +63,6 @@ int main(int argc, char **argv)
             }
         }
         temp = "";
-        printf("%c\n", c);
         new_file << c;
     }
 }
