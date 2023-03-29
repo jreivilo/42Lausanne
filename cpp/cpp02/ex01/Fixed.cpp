@@ -32,8 +32,9 @@ Fixed::Fixed( float const raw )
 Fixed & Fixed::operator=( Fixed const & rhs )
 {
 	std::cout << "Assignation operator called" << std::endl;
-	this->_rawBits = rhs.getRawBits(); //getRawBits is a const function so it can be called on a const object
-	return *this; //return the object that called the function
+	if (this != &rhs)
+		this->_rawBits = rhs.getRawBits();
+	return *this;
 }
 
 int Fixed::getRawBits( void ) const
@@ -57,6 +58,13 @@ int Fixed::toInt( void ) const
 	return (this->_rawBits >> this->_fractionalBits);
 }
 
+
+
+std::ostream & operator<<( std::ostream & o, Fixed const & rhs )
+{
+	o << rhs.toFloat();
+	return o;
+}
 
 
 
