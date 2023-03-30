@@ -50,19 +50,19 @@ void Fixed::setRawBits( int const raw )
 
 float Fixed::toFloat( void ) const
 {
-	return ((float)this->_rawBits / (1 << this->_fractionalBits));
+	return ((float)this->_rawBits / (1 << this->_fractionalBits)); // / is a bitwise operator that shifts the bits of the number to the left and fills the voids left as a result of the shifting with 0s.
 }
 
 int Fixed::toInt( void ) const
 {
-	return (this->_rawBits >> this->_fractionalBits);
+	return (this->_rawBits >> this->_fractionalBits); // >> is a bitwise operator that shifts the bits of the number to the right and fills the voids left as a result of the shifting with 0s.
 }
 
 
 
 std::ostream & operator<<( std::ostream & o, Fixed const & rhs )
 {
-	o << rhs.toFloat();
+	o << rhs.toFloat(); // << is a bitwise operator that shifts the bits of the number to the left and fills the voids left as a result of the shifting with 0s.
 	return o;
 }
 

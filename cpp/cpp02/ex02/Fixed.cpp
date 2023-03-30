@@ -34,16 +34,16 @@ Fixed::Fixed( float const raw )
 Fixed & Fixed::operator=( Fixed const & rhs )
 {
 	// std::cout << "Assignation operator called" << std::endl;
-	if (this != &rhs)
-		this->_rawBits = rhs.getRawBits();
-	return *this;
+	if (this != &rhs) // check for self-assignment
+		this->_rawBits = rhs.getRawBits(); // copy the value
+	return *this; // return the existing object so we can chain this operator
 }
 
 
 
 bool Fixed::operator>( Fixed const & rhs ) const
 {
-	return (this->_rawBits > rhs.getRawBits());
+	return (this->_rawBits > rhs.getRawBits()); 
 }
 
 bool Fixed::operator<( Fixed const & rhs ) const
@@ -51,7 +51,7 @@ bool Fixed::operator<( Fixed const & rhs ) const
 	return (this->_rawBits < rhs.getRawBits());
 }
 
-bool Fixed::operator>=( Fixed const & rhs ) const
+bool Fixed::operator>=( Fixed const & rhs ) const 
 {
 	return (this->_rawBits >= rhs.getRawBits());
 }
@@ -103,9 +103,9 @@ Fixed & Fixed::operator++( void )
 
 Fixed Fixed::operator++( int )
 {
-	Fixed tmp(*this);
+	Fixed tmp(*this); // copy the current object
 	this->_rawBits++;
-	return (tmp);
+	return (tmp); // return the copy
 }
 
 Fixed & Fixed::operator--( void )
@@ -169,7 +169,7 @@ Fixed const & Fixed::max( Fixed const & a, Fixed const & b )
 }
 
 
-std::ostream & operator<<( std::ostream & o, Fixed const & rhs )
+std::ostream & operator<<( std::ostream & o, Fixed const & rhs ) 
 {
 	o << rhs.toFloat();
 	return o;
