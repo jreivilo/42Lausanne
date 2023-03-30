@@ -32,9 +32,14 @@ Fixed::Fixed( float const raw )
 Fixed & Fixed::operator=( Fixed const & rhs )
 {
 	std::cout << "Assignation operator called" << std::endl;
-	if (this != &rhs)
+	if (this != &rhs) // check for self-assignment
 		this->_rawBits = rhs.getRawBits();
 	return *this;
+	//We return a pointer in order to enable the use of the assignment operator,
+	// allowing us to assign one object to another. 
+	// This is done by returning a pointer to the current object, 
+	// which allows us to use the assignment operator to assign 
+	// the right-hand side object to the current object.
 }
 
 int Fixed::getRawBits( void ) const

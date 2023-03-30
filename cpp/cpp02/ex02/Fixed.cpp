@@ -171,8 +171,8 @@ Fixed const & Fixed::max( Fixed const & a, Fixed const & b )
 
 std::ostream & operator<<( std::ostream & o, Fixed const & rhs ) 
 {
-	o << rhs.toFloat();
-	return o;
+	o << rhs.toFloat(); //
+	return o; //
 }
 
 

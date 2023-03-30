@@ -21,7 +21,8 @@ class Fixed
 
 		Fixed & operator=( Fixed const & rhs ); //assignment operator overload (assignation operator) //rhs = right hand side
 
-		bool operator>( Fixed const & rhs ) const;
+		bool operator>( Fixed const & rhs ) const; //The first const ensures that the object on which the operator is called is not changed by the operator. 
+		//The second const ensures that the object passed as an argument to the operator is also not changed by the operator.
 		bool operator<( Fixed const & rhs ) const;
 		bool operator>=( Fixed const & rhs ) const;
 		bool operator<=( Fixed const & rhs ) const;
@@ -38,6 +39,10 @@ class Fixed
 		Fixed & operator--( void ); //prefix
 		Fixed operator--( int ); //postfix
 
+		// The difference between the two is that the prefix version of the operator returns a reference to the object itself, 
+		// while the postfix version returns a copy of the object before it was modified. 
+		// This allows the prefix version to be used in an expression, 
+		// while the postfix version can be used to store the original value of the object before it is modified.
 
 
 
