@@ -1,12 +1,12 @@
-NAME = sed
+NAME = Trap
 
-SRC		= main.cpp
+SRC		= main.cpp ClapTrap.cpp ScavTrap.cpp 
 
 CC 		= c++
 
 FLAGS	= -std=c++98 -Wall -Wextra -Werror 
 
-OBJS 	= $(SRC:.cpp=.o)
+OBJS 	= $(SRC:.c=.o)
 
 $(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(SRC) -o $(NAME)
@@ -17,10 +17,9 @@ all: $(NAME) $(OBJS)
 		$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(SRC:.cpp=.o)
+	rm -rf $(NAME)
 
 fclean: clean
-	rm -rf $(NAME)
 
 re: fclean all
 

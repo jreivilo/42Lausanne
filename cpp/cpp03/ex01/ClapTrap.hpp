@@ -7,7 +7,7 @@
 
 class ClapTrap
 {
-	private:
+	protected:
 		std::string		name;
 		int				hitPoints;
 		int				energyPoints;
@@ -17,9 +17,8 @@ class ClapTrap
 		ClapTrap(std::string name);
 		~ClapTrap();
 
-		// ClapTrap(ClapTrap const & src ); //copy constructor
-
-		// ClapTrap & operator=( ClapTrap const & rhs ); //assignment operator overload (assignation operator) //rhs = right hand side
+		ClapTrap(ClapTrap const & src ); //copy constructor
+		ClapTrap & operator=( ClapTrap const & rhs ); //assignment operator overload (assignation operator) //rhs = right hand side
 
 		void attack(std::string const & target);
 		void takeDamage(unsigned int amount);

@@ -3,7 +3,7 @@
 
 ClapTrap::ClapTrap()
 {
-	std::cout << "Default constructor called" << std::endl;
+	std::cout << "ClapTrap default constructor called" << std::endl;
 	this->name = "Default";
 	this->hitPoints = 10;
 	this->energyPoints = 10;
@@ -12,7 +12,7 @@ ClapTrap::ClapTrap()
 
 ClapTrap::ClapTrap(std::string name)
 {
-	std::cout << "Constructor called" << std::endl;
+	std::cout << "ClapTrap constructor called" << std::endl;
 	this->name = name;
 	this->hitPoints = 10;
 	this->energyPoints = 10;
@@ -21,28 +21,28 @@ ClapTrap::ClapTrap(std::string name)
 
 ClapTrap::~ClapTrap()
 {
-	std::cout << "Destructor called" << std::endl;
+	std::cout << "ClapTrap Destructor called" << std::endl;
 }
 
 
-// ClapTrap::ClapTrap(ClapTrap const & src ) //copy constructor
-// {
-// 	std::cout << "Copy constructor called" << std::endl;
-// 	*this = src;
-// }
+ClapTrap::ClapTrap(ClapTrap const & src ) //copy constructor
+{
+	std::cout << "ClapTrap Copy constructor called" << std::endl;
+	*this = src;
+}
 
-// ClapTrap & ClapTrap::operator=( ClapTrap const & rhs ) //assignment operator overload (assignation operator) //rhs = right hand side
-// {
-// 	std::cout << "Assignation operator called" << std::endl;
-// 	if (this != &rhs) // check for self-assignment
-// 	{
-// 		this->name = rhs.name;
-// 		this->hitPoints = rhs.hitPoints;
-// 		this->energyPoints = rhs.energyPoints;
-// 		this->attackDamage = rhs.attackDamage;
-// 	}
-// 	return *this; // return the existing object so we can chain this operator
-// }
+ClapTrap & ClapTrap::operator=( ClapTrap const & rhs ) //assignment operator overload (assignation operator) //rhs = right hand side
+{
+	std::cout << "ClapTrap Assignation operator called" << std::endl;
+	if (this != &rhs) // check for self-assignment
+	{
+		this->name = rhs.name;
+		this->hitPoints = rhs.hitPoints;
+		this->energyPoints = rhs.energyPoints;
+		this->attackDamage = rhs.attackDamage;
+	}
+	return *this; // return the existing object so we can chain this operator
+}
 
 //abilities
 void ClapTrap::attack(std::string const & target)

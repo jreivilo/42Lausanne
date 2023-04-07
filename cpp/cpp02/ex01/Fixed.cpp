@@ -31,7 +31,7 @@ Fixed::Fixed( float const raw )
 
 Fixed & Fixed::operator=( Fixed const & rhs )
 {
-	std::cout << "Assignation operator called" << std::endl;
+	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &rhs) // check for self-assignment
 		this->_rawBits = rhs.getRawBits();
 	return *this;
