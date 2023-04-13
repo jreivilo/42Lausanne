@@ -25,7 +25,7 @@ Dog & Dog::operator=(Dog const & rhs)
 	if (this != &rhs)
 	{
 		this->type = rhs.type;
-		*this->brain = *rhs.brain;
+		this->brain = new Brain(*rhs.brain);
 	}
 	return *this;
 }

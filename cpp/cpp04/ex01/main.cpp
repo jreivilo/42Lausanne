@@ -5,6 +5,7 @@
 
 int main()
 {
+{
 	Animal* animal[10];
 	for (int i = 0; i < 10; i++)
 	{
@@ -18,6 +19,13 @@ int main()
 		animal[i]->makeSound();
 		delete animal[i];
 	}
+}
+std::cout << "------------------------" << std::endl;
+
+Dog basic;
+{
+Dog tmp = basic;
+}
 }
 
 
