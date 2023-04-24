@@ -1,9 +1,14 @@
 #ifndef	BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-# include <iostream>
-# include <string>
-# include <exception>
+#include <iostream>
+#include <string>
+#include <exception>
+
+#include "Form.hpp"
+
+class Form; // forward declaration to avoid circular dependency
+//la meme chose que dans le .hpp de form ... sinon ca marche pas hein
 
 class Bureaucrat
 {
@@ -21,6 +26,8 @@ class Bureaucrat
 		int getGrade() const;
 		void incrementGrade();
 		void decrementGrade();
+
+		void signForm(Form & form);
 
 		class GradeTooHighException : public std::exception
 		{

@@ -37,7 +37,6 @@ int main()
 		try 
 		{
 			Bureaucrat b5("AA", 0);
-			std::cout << "COucou" << std::endl;
 		}
 		catch (std::exception & e)
 		{

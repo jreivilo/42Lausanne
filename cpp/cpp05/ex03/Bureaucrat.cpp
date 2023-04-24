@@ -1,4 +1,3 @@
-
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat(std::string const & name, int grade) : name(name) //we can initialize the const member name in the initialization list but not the grade
@@ -53,6 +52,32 @@ void Bureaucrat::decrementGrade()
 		throw Bureaucrat::GradeTooLowException();
 	else
 		this->grade++;
+}
+
+void Bureaucrat::signForm(Form & form)
+{
+	try
+	{
+		form.beSigned(*this);
+		std::cout << this->getName() << " signs " << form.getName() << std::endl;
+	}
+	catch (std::exception & e)
+	{
+		std::cout << this->getName() << " cannot sign " << form.getName() << " because " << e.what() << std::endl;
+	}
+}
+
+void Bureaucrat::executeForm(Form const & form)
+{
+	try
+	{
+		form.execute(*this);
+		std::cout << this->getName() << " executes " << form.getName() << std::endl;
+	}
+	catch (std::exception & e)
+	{
+		std::cout << this->getName() << " cannot execute " << form.getName() << " because " << e.what() << std::endl;
+	}
 }
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()  
