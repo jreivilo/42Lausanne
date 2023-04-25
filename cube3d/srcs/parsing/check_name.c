@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.h                                            :+:      :+:    :+:   */
+/*   check_name.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nadel-be <nadel-be@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 15:50:38 by jolivier          #+#    #+#             */
-/*   Updated: 2023/04/11 16:18:55 by nadel-be         ###   ########.fr       */
+/*   Created: 2023/04/13 13:33:23 by nadel-be          #+#    #+#             */
+/*   Updated: 2023/04/13 13:45:28 by nadel-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#include "cub3d.h"
 
-# include "cub3d.h"
+int	check_name_map(char *argv)
+{
+	int		len;
+	char	tmp[5];
 
-int	key_hook(int keycode, t_all *all);
-int	hook_up(t_all *all);
-int	hook_down(t_all *all);
-int	hook_left(t_all *all);
-int	hook_right(t_all *all);
-
-int	exit_without_error(t_all *all);
-
-#endif
+	len = ft_strlen(argv);
+	tmp[4] = '\0';
+	tmp[3] = argv[len - 1];
+	tmp[2] = argv[len - 2];
+	tmp[1] = argv[len - 3];
+	tmp[0] = argv[len - 4];
+	if (ft_strncmp(tmp, ".cub", 4) != 0)
+	{
+		error("Wrong extension map\n");
+		return (ERROR);
+	}
+	return (SUCCESS);
+}

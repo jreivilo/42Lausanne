@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadel-be <nadel-be@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:41:47 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 16:27:57 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:15:06 by nadel-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ int	build_game(t_map *map, t_player *player)
 	all.map = map;
 	init_all(&all, &game, &info, texture);
 	raycasting(&all);
+	mlx_hook(game.win, 17, 0, exit_without_error, &all);
+	mlx_hook(game.win, 2, 0, key_hook, &all);
 	mlx_loop_hook(game.mlx, raycasting, &all);
-	mlx_key_hook(game.win, key_hook, &all);
 	mlx_put_image_to_window(game.mlx, game.win, game.img, 0, 0);
 	mlx_loop(game.mlx);
 	return (SUCCESS);

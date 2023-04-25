@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_resolution.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadel-be <nadel-be@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 14:43:39 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 16:29:28 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/11 11:27:05 by nadel-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int	parse_resolution(char *line, t_map *map)
 		map->r_width = 2560;
 	if (map->r_height > 1440)
 		map->r_height = 1440;
+	free(line);
 	return (SUCCESS);
 }

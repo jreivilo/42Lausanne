@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadel-be <nadel-be@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 13:59:13 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 16:47:43 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:02:00 by nadel-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ int	check_map_char(t_map *map)
 	while (i < map->height)
 	{
 		j = 0;
-		while (j < map->width)
+		while (map->map[i][j])
 		{
 			if (map->map[i][j] != '0' && map->map[i][j] != '1'
 				&& map->map[i][j] != '2' && map->map[i][j] != 'N'
 				&& map->map[i][j] != 'S' && map->map[i][j] != 'E'
-				&& map->map[i][j] != 'W' && map->map[i][j] != ' ')
-				error("map error");
+				&& map->map[i][j] != 'W' && ft_isspace(map->map[i][j]) == 0)
+			{
+				printf("error au [%i][%i]: %c\n", i, j, map->map[i][j]);
+				error("map error 1");
+			}
 			j++;
 		}
 		i++;
@@ -46,7 +49,7 @@ int	check_one_start(t_map *map)
 	while (i < map->height)
 	{
 		j = 0;
-		while (j < map->width)
+		while (map->map[i][j])
 		{
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
 				|| map->map[i][j] == 'E' || map->map[i][j] == 'W')
@@ -56,35 +59,7 @@ int	check_one_start(t_map *map)
 		i++;
 	}
 	if (count != 1)
-		error("map error");
-	return (SUCCESS);
-}
-
-int	check_map_border(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (j < map->width)
-		{
-			if (i == 0 || i == map->height - 1)
-			{
-				if (map->map[i][j] != '1')
-					error("map error");
-			}
-			else if (j == 0 || j == map->width - 1)
-			{
-				if (map->map[i][j] != '1')
-					error("map error");
-			}
-			j++;
-		}
-		i++;
-	}
+		error("map error count player");
 	return (SUCCESS);
 }
 
@@ -96,5 +71,6 @@ int	check_map(t_map *map)
 		return (ERROR);
 	if (check_one_start(map) == ERROR)
 		return (ERROR);
+	add_protect(map);
 	return (SUCCESS);
 }

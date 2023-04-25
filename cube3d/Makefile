@@ -1,7 +1,7 @@
-SRCS = srcs/main/main.c \
+SRCS = srcs/main/main.c srcs/main/error.c\
 		srcs/build/init.c \
-		srcs/hooks/hook.c \
-		srcs/parsing/check_map.c srcs/parsing/parse_args.c srcs/parsing/parse_map.c srcs/parsing/parse_player.c srcs/parsing/parse_resolution.c srcs/parsing/parse_texture.c \
+		srcs/hooks/hook.c srcs/hooks/directions.c \
+		srcs/parsing/add_protect.c srcs/parsing/check_map.c srcs/parsing/check_border.c srcs/parsing/check_border_utils.c srcs/parsing/parse_args.c srcs/parsing/parse_map.c srcs/parsing/parse_player.c srcs/parsing/parse_resolution.c srcs/parsing/parse_texture.c srcs/parsing/parse_texture_utils.c srcs/parsing/utils.c srcs/parsing/check_name.c \
 		srcs/raycasting/raycasting.c srcs/raycasting/raycasting_utils.c srcs/raycasting/raycasting_utils2.c 
 OBJS = ${SRCS:.c=.o}
 LIBFT_DIR = libft
@@ -9,8 +9,8 @@ MLX_DIR = mlx
 HEADER = includes
 NAME = cub3D
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra
-GCC = gcc -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -O2
+GCC = gcc -g
 CC = gcc -g -fsanitize=address -lreadline
 
 

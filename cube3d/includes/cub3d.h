@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadel-be <nadel-be@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:01:22 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 16:03:20 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:29:11 by nadel-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@
 # define SPRITE 4
 
 # define NOTHING 99
+# define BUFFER_SIZE 1
 
-int	error(char *str);
+int		error(char *str);
+void	error_with_free(t_map *map, char *str);
 
 #endif

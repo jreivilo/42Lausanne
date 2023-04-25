@@ -6,7 +6,7 @@
 /*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 11:20:44 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 16:38:24 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/13 13:26:03 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	get_side_wall(t_all *all, t_ray *ray)
 		else
 			all->info->side = SOUTH;
 	}
-	else
+	if ((int)ray->ray_y == (int)(ray->ray_y - ray->ray_y_step))
 	{
 		if ((int)ray->ray_x > (int)(ray->ray_x - ray->ray_x_step))
 			all->info->side = WEST;
@@ -125,7 +125,7 @@ int	raycasting(t_all *all)
 	while (x < all->map->r_width)
 	{
 		y = 0;
-		distance = calculate_distance_to_wall(all, x, y);
+		distance = calculate_distance_to_wall(all, all->map->r_width - x, y);
 		if (distance < 0)
 			distance = -distance;
 		while (y < all->map->r_height)

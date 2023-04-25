@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nadel-be <nadel-be@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:56:09 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 15:57:31 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:36:52 by nadel-be         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ typedef struct s_map
 	char	*sprite;
 	char	**wall;
 	int		floor;
+	int		floor_set;
 	int		ceiling;
+	int		ceiling_set;
+	int		map_set;
 }	t_map;
 
 typedef struct s_info

@@ -1,0 +1,12 @@
+R 800 600
+           NO       textures/north.xpm
+SO textures/south.xpm
+WE textures/west.xpm
+EA  textures/east.xpm
+ S         textures/stripe.xpm
+    C  255,0,0        
+    F  0,0,122
+
+ 111111
+1N01111
+ 11111111

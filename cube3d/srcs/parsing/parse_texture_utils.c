@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting_utils2.c                                :+:      :+:    :+:   */
+/*   parse_texture_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 15:30:24 by jolivier          #+#    #+#             */
-/*   Updated: 2023/04/12 14:11:49 by jolivier         ###   ########.fr       */
+/*   Created: 2023/04/12 14:36:14 by jolivier          #+#    #+#             */
+/*   Updated: 2023/04/12 14:48:03 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	init_t_ray(t_all *all, t_ray *ray, int x, int y)
+void	parse_color_iteration(char *line, int *j)
 {
-	(void)y;
-	ray->ray_x = all->player->pos_x;
-	ray->ray_y = all->player->pos_y;
-	ray->ray_angle = (all->player->angle + \
-		(((double)x / all->map->r_width) * 60) - 30 + 180) * M_PI / 180;
-	ray->ray_x_step = sin(ray->ray_angle) * 0.001;
-	ray->ray_y_step = cos(ray->ray_angle) * 0.001;
-	ray->ray_length = 0;
-	return (SUCCESS);
+	while (ft_isdigit(line[*j]) == 1)
+		(*j)++;
+	(*j)++;
+}
+
+void	parse_color_init_color_floor(t_map *map, int r, int g, int b)
+{
+	map->floor = (r << 16) + (g << 8) + b;
+	map->floor_set = 1;
+}
+
+void	parse_color_init_color_ceiling(t_map *map, int r, int g, int b)
+{
+	map->ceiling = (r << 16) + (g << 8) + b;
+	map->ceiling_set = 1;
 }

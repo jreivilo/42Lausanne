@@ -6,7 +6,7 @@
 /*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:05:18 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 16:41:16 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:44:58 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,47 @@ int	realloc_map(t_map *map, char *line)
 	return (SUCCESS);
 }
 
-int	parse_map_line(char *line, t_map *map)
+int	true_len(char *line)
+{
+	int	i;
+	int	t;
+
+	i = 0;
+	t = 0;
+	while (line[i])
+	{
+		if (line[i] == '\t')
+			t += 4;
+		i++;
+	}
+	t += ft_strlen(line);
+	return (t);
+}
+
+int	parse_map_line(char *line, char *tmp)
 {
 	int		i;
 	int		j;
-	char	*tmp;
 
 	i = 0;
 	j = 0;
-	tmp = malloc(sizeof(char) * (ft_strlen(line) + 1));
-	if (!(tmp))
-		error("Malloc error");
 	while (line[i] != '\0')
 	{
-		if (line[i] == ' ' && line[i] == '\t')
-			tmp[j] = 1;
+		if (line[i] == '\t')
+		{
+			tmp[j++] = '1';
+			tmp[j++] = '1';
+			tmp[j++] = '1';
+			tmp[j++] = '1';
+			i++;
+		}
+		else if (line[i] == ' ')
+		{
+			tmp[j++] = '1';
+			i++;
+		}
 		else
-			tmp[j] = line[i];
-		i++;
-		j++;
+			tmp[j++] = line[i++];
 	}
-	tmp[j] = '\0';
-	realloc_map(map, tmp);
 	return (SUCCESS);
 }

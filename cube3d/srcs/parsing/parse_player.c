@@ -6,7 +6,7 @@
 /*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 14:10:27 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 11:55:42 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/17 12:48:04 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	check_direction(t_map *map, t_player *player, int i, int j)
 	else if (map->map[i][j] == 'S')
 		player->angle = 180;
 	else if (map->map[i][j] == 'E')
-		player->angle = 90;
-	else if (map->map[i][j] == 'W')
 		player->angle = 270;
+	else if (map->map[i][j] == 'W')
+		player->angle = 90;
 	return (SUCCESS);
 }
 
@@ -34,7 +34,7 @@ int	parse_player(t_map *map, t_player *player)
 	while (i < map->height)
 	{
 		j = 0;
-		while (j < map->map[i][j])
+		while (map->map[i][j])
 		{
 			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
 				|| map->map[i][j] == 'E' || map->map[i][j] == 'W')
@@ -48,5 +48,6 @@ int	parse_player(t_map *map, t_player *player)
 		}
 		i++;
 	}
+	error_with_free(map, "error map - missing player");
 	return (ERROR);
 }

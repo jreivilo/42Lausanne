@@ -6,7 +6,7 @@
 /*   By: jolivier <jolivier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 12:13:24 by jolivier          #+#    #+#             */
-/*   Updated: 2023/03/02 16:37:40 by jolivier         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:29:20 by jolivier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	display_wall(t_all *all, int x, int y, double ratio)
 	side_ratio = all->info->side_ratio;
 	if (ratio == 0)
 		ratio = 0.0001;
+	if (ratio == 1)
+		ratio = 0.9999;
 	if (all->info->sprite == 1)
 	{
 		pixel_put(all->game, x, y, col_pix(all, ratio, side_ratio, SPRITE));

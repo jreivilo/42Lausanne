@@ -1,4 +1,4 @@
-
+R 500 500
 NO textures/north.xpm
 
 
@@ -6,14 +6,19 @@ SO textures/south.xpm
 WE textures/west.xpm
 EA textures/east.xpm
 S textures/stripe.xpm
-SR textures/stripe.xpm
 
-F 222,252,111
-C 0,0,0
+
+
+F s, f, 50, 30
+C 135, 230, 152
+
+
+
+
 1111111111
-10000000E1
 1000000001
 1000000001
+100000N001
 1000110101
 1000112111
 1000011101
