@@ -8,8 +8,9 @@
 
 int		main(void)
 {
-	Array<int>		intArray(5);
-	Array<float>	floatArray(5);
+	//e.g. new int[10];
+	Array<int>		intArray(5); //why do we add <int> here? Is it because we are creating an array of type int? 
+	Array<float>	floatArray(5); //<float> is the type of the array
 	Array<double>	doubleArray(5);
 	Array<char>		charArray(5);
 	Array<std::string>	stringArray(5);

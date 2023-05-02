@@ -8,8 +8,8 @@ template <typename T>
 class Array
 {
 private:
-	T*		__array;
-	int		__size;
+	T*		__array; //t is the type of the array
+	int		__size; //n is size of the array
 	
 public:
 	Array(void) : __array(NULL), __size(0) {} // default constructor 
