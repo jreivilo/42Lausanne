@@ -165,7 +165,7 @@ bool check_int(std::string str)
 
 void float_transpose(std::string str)
 {
-	std::cout << "float_transpose\n";
+	// std::cout << "float_transpose\n";
 	if (check_float(str) == false)
 		throw Error::WrongFormat();
 	str.pop_back();
@@ -177,7 +177,7 @@ void float_transpose(std::string str)
 
 void double_transpose(std::string str)
 {
-	std::cout << "double transpose\n";
+	// std::cout << "double transpose\n";
 	if (check_double(str) == false)
 		throw Error::WrongFormat();
 	double n_double = std::stod(str);
@@ -189,7 +189,7 @@ void double_transpose(std::string str)
 
 void	int_transpose(std::string str)
 {
-	std::cout << "int transpose\n";
+	// std::cout << "int transpose\n";
 	if (check_int(str) == false)
 		throw Error::WrongFormat();
 	double n_double = std::stod(str);
