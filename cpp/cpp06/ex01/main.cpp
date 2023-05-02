@@ -3,12 +3,7 @@
 #include <iostream>
 
 
-typedef struct Data
-{
-	std::string s1;
-	int n;
-	std::string s2;
-} Data;
+#include "Data.hpp"
 
 uintptr_t serialize(Data* ptr)
 {
