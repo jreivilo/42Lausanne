@@ -219,9 +219,9 @@ void special_case(std::string str)
 	if (str == "nan" || str == "nanf")
 		std::cout << "char: impossible\nint: impossible\nfloat: nanf\ndouble: nan\n";
 	if (str == "inf" || str == "inff" || str == "+inf" || str == "+inff")
-		std::cout << "char: impossible\nint: impossible\nfloat: inf\ndouble: inf\n";
+		std::cout << "char: impossible\nint: impossible\nfloat: inff\ndouble: inf\n";
 	if (str == "-inf" || str == "-inff")
-		std::cout << "char: impossible\nint: impossible\nfloat: -inf\ndouble: -inf\n";
+		std::cout << "char: impossible\nint: impossible\nfloat: -inff\ndouble: -inf\n";
 }
 
 

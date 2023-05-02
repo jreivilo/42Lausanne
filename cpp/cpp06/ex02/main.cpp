@@ -22,7 +22,7 @@ Base *generate(void)
 void identify_from_pointer(Base *p) // p is a pointer to a Base class
 {
 	if (dynamic_cast<A *>(p)) // dynamic_cast returns a pointer to the casted class if the cast succeeds, otherwise it returns NULL
-		std::cout << "A\n";
+		std::out << "A\n";
 	else if (dynamic_cast<B *>(p))
 		std::cout << "B\n";
 	else if (dynamic_cast<C *>(p))
