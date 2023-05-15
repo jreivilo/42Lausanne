@@ -114,14 +114,22 @@ void display(std::map<std::tm, double> &db, char *file_name)
 		ss >> c >> number;
 
 		//find the date in the map
-		while(db.find(tm) == db.end())
-			tm.tm_mday = tm.tm_mday - 1;
-		if (number < 0)
-			std::cout << "Error: negative number or empty number" << std::endl;
-		else if (number > 22000000)
-			std::cout << "Error: SBF is proud of you, you are able to own more btc than exist" << std::endl;
+
+		//if the date is lower than the first date in the map return an error
+		if (tm < db.begin()->first)
+			std::cout << "Error: date is lower than the first date in the map" << std::endl;
 		else
-			std::cout << std::put_time(&tm, "%Y-%m-%d") << " => " << number << " = " << number * db[tm] << std::endl;
+		{
+			while(db.find(tm) == db.end())
+				tm.tm_mday--;
+			if (number < 0)
+				std::cout << "Error: negative number or empty number" << std::endl;
+			else if (number > 22000000)
+				std::cout << "Error: SBF is proud of you, you are able to own more btc than exist" << std::endl;
+			else
+				std::cout << std::put_time(&tm, "%Y-%m-%d") << " => " << number << " = " << number * db[tm] << std::endl;
+		}
+
 	}
 }
 		
