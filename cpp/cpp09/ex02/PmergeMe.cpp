@@ -76,14 +76,14 @@ void PmergeMe::splitVector(std::vector<int> &v)
 
 //operator overload + std::_List_iterator<int>
 
-std::_List_iterator<int> operator+(std::_List_iterator<int> it, int n)
+std::list<int>::iterator operator+(std::list<int>::iterator it, int n)
 {
 	for (int i = 0; i < n; i++)
 		it++;
 	return (it);
 }
 
-std::_List_iterator<int> operator-(std::_List_iterator<int> it, int n)
+std::list<int>::iterator operator-(std::list<int>::iterator it, int n)
 {
 	for (int i = 0; i < n; i++)
 		it--;
