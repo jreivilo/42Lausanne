@@ -85,7 +85,7 @@ void read_db(std::map<std::tm, double> &db)
 		// std::cout << tm.tm_mon << std::endl;
 		// std::cout << price << std::endl;
 
-		db.insert(std::pair<std::tm, double>(tm, price));;
+		db.insert(std::pair<std::tm, double>(tm, price));
 	}
 	file.close();
 }
@@ -114,9 +114,9 @@ void display(std::map<std::tm, double> &db, char *file_name)
 		ss >> c >> number;
 
 		//find the date in the map
-		if (db.find(tm) == db.end())
-			std::cout << "Error: date not found" << std::endl;
-		else if (number < 0)
+		while(db.find(tm) == db.end())
+			tm.tm_mday = tm.tm_mday - 1;
+		if (number < 0)
 			std::cout << "Error: negative number or empty number" << std::endl;
 		else if (number > 22000000)
 			std::cout << "Error: SBF is proud of you, you are able to own more btc than exist" << std::endl;
