@@ -29,6 +29,11 @@ public:
 		return (std::stack<T>::c.end());
 	}
 };
+//Member objects
+// Container c
+ 
+// the underlying container
+// (protected member object)
 
 #endif
 
