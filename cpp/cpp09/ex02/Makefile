@@ -4,7 +4,7 @@ SRC		= main.cpp PmergeMe.cpp
 
 CC 		= c++
 
-FLAGS	= -Wall -Wextra -Werror -std=c++98
+FLAGS	= -Wall -Wextra -Werror
 
 OBJS 	= $(SRC:.cpp=.o)
 

@@ -24,6 +24,7 @@ Cat & Cat::operator=(Cat const & rhs)
 	std::cout << "Cat assignation operator called" << std::endl;
 	if (this != &rhs)
 	{
+		delete this->brain;
 		this->type = rhs.type;
 		this->brain = new Brain(*rhs.brain);
 	}
