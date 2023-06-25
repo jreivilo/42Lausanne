@@ -8,15 +8,7 @@ RUN rm -rf /var/lib/apt/lists/*
 #copy the configuration file from the current directory and paste it inside the container
 COPY conf/default /etc/nginx/sites-available/default
 
-RUN openssl req -newkey rsa:4096 \
-    -x509 \
-    -days 365 \
-    -sha256 \
-    -nodes \
-    -keyout /etc/ssl/private/nginx.key \
-    -out /etc/ssl/certs/nginx.crt \
-    -subj "/CN=fbechtol.42.fr" 
-
+RUN openssl req -newkey rsa:4096 -x509 -days 365 -sha256 -nodes -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt -subj "/CN=jolivier.42.fr" 
 #-x509 : This option outputs a self signed certificate instead of a certificate request. This is typically used to generate a test certificate or a self signed root CA.
 #nodes : if this option is specified then if a private key is created it will not be encrypted.
 #out : This specifies the output filename to write to or standard output by default.

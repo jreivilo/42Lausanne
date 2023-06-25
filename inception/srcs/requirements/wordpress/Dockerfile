@@ -16,7 +16,8 @@ RUN	curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 COPY tools/auto-config.sh /tmp/auto-config.sh
 RUN chmod +x /tmp/auto-config.sh
 
-# WORKDIR /var/www/wordpress
+RUN mkdir -p /var/www/wordpress
+WORKDIR /var/www/wordpress
 
 EXPOSE 9000
 

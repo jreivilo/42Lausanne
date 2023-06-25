@@ -2,12 +2,11 @@
 
 sleep 8
 
-cd /var/www/wordpress
+#!/bin/bash
 
 echo "Installing wordpress..."
-rm -rf /var/www/wordpress/*
 
-wp core download --allow-root
+wp core download --allow-root --path=/var/www/wordpress
 
 wp core config	\
 				--dbname=$SQL_DATABASE \

@@ -3,6 +3,7 @@
 if [ ! -d "/var/lib/mysql/$SQL_DATABASE" ]; then
 	mysql_install_db --user=root --datadir=/var/lib/mysql
     service mysql start
+
     echo "$SQL_DATABASE database does not exist"
     mysql -u root -e "CREATE DATABASE $SQL_DATABASE;"
     mysql -u root -e "CREATE USER '$SQL_USER'@'%' IDENTIFIED BY '$SQL_PASSWORD';"
@@ -16,4 +17,4 @@ if [ ! -d "/var/lib/mysql/$SQL_DATABASE" ]; then
 	mysqladmin -u root -p $SQL_ROOT_PASSWORD shutdown
 fi
 
-mysqld_safe
+# mysqld_safe
