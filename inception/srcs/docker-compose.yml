@@ -1,0 +1,62 @@
+# (https://docs.docker.com/compose/compose-file/)
+
+version: '3'
+
+networks:
+    inception:
+
+# (https://blog.code4hire.com/2018/06/define-named-volume-with-host-mount-in-the-docker-compose-file/)
+volumes:
+    wp_database:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: /Users/fbechtol/Documents/data/wp_db
+
+    wp_files:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: /Users/fbechtol/Documents/data/wp_files
+
+services:
+    mariadb:
+        container_name: mariadb
+        image: mariadb:I
+        build: ./requirements/mariadb
+        networks:
+            - inception
+        volumes:
+            - wp_database:/var/lib/mysql
+        # (https://stackoverflow.com/questions/61725195/difference-in-docker-restart-policy-between-on-failure-and-unless-stopped)
+        restart: unless-stopped
+
+    wordpress:
+        container_name: wordpress
+        image: wordpress:am
+        build: ./requirements/wordpress
+        networks:
+            - inception
+        volumes:
+            - wp_files:/var/www/wordpress
+        env_file:
+            - .env
+        depends_on:
+            - mariadb
+        restart: unless-stopped
+
+    nginx:
+        container_name: nginx
+        image: nginx:we
+        build: ./requirements/nginx
+        ports:
+            - "443:443"
+        networks:
+            - inception
+        volumes:
+            - wp_files:/var/www/wordpress
+        depends_on:
+          - wordpress
+        restart: unless-stopped

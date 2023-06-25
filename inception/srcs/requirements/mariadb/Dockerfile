@@ -1,25 +1,27 @@
 FROM debian:buster
 
-EXPOSE 3306
-
-#temp, i need to remove it later with the docker compose
-ENV SQL_DATABASE=inception
-ENV SQL_USER=inception
-ENV SQL_PASSWORD=inception
-ENV SQL_ROOT_PASSWORD=inception
-
-
-
-
 RUN apt update -y
-RUN apt upgrade -y
+# RUN apt upgrade -y
 
 RUN    apt-get install mariadb-server -y
+RUN rm -rf /var/lib/apt/lists/*
 
+COPY ./conf/mariadb.conf /etc/mysql/mariadb.conf.d
 
-COPY conf/mariadb.conf	/etc/mysql/mariadb.conf.d/50-server.cnf
+# COPY conf/mariadb.conf	/etc/mysql/mariadb.conf.d/50-server.cnf
+# RUN chmod 0444 /etc/mysql/mariadb.conf.d/50-server.cnf
+
 COPY tools/my_sql.sh		/etc/mysql/my_sql.sh
-
-RUN chmod 0444 /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN chmod 777 /etc/mysql/my_sql.sh
-# RUN /etc/mysql/my_sql.shbin
+
+COPY ./tools/setup_db.sql /
+
+RUN service mysql start ; \
+    mysql < setup_db.sql ; \
+    rm -rf setup_db.sql
+
+EXPOSE 3306
+
+# CMD ["bash", "/etc/mysql/my_sql.sh"]
+
+CMD ["mysqld_safe"]
