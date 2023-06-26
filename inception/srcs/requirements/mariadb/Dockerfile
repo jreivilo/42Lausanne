@@ -1,5 +1,10 @@
 FROM debian:buster
 
+ENV SQL_DATABASE=wordpress
+ENV SQL_USER=db_user
+ENV SQL_PASSWORD=db_user_password
+ENV SQL_ROOT_PASSWORD=db_root_password
+
 RUN apt update -y
 # RUN apt upgrade -y
 
