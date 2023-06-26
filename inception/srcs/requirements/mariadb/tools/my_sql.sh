@@ -13,6 +13,8 @@ sleep 5
 # Delete all other objects (procedures, functions, triggers, etc.)
 # mysql -u "$SQL_USER" -p"$SQL_PASSWORD" -e "USE $SQL_DATABASE; SELECT CONCAT('DROP ', OBJECT_TYPE, ' ', OBJECT_NAME, ';') FROM INFORMATION_SCHEMA.OBJECTS WHERE OBJECT_SCHEMA='$SQL_DATABASE';" | grep -v CONCAT | mysql -u "$SQL_USER" -p"$SQL_PASSWORD"
 # rm -rf /var/lib/mysql/$SQL_DATABASE
+mysql -u $SQL_USER -p$SQL_PASSWORD -e "SHOW DATABASES;" | grep -Ev "(Database|mysql|performance_schema|information_schema)" | awk '{print "DROP DATABASE IF EXISTS " $1 ";"}' | mysql -u $SQL_USER -p$SQL_PASSWORD
+
 if [ ! -d "/var/lib/mysql/$SQL_DATABASE" ]; then
 	echo "Create DB and USER"
 	mysql -e "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE;"

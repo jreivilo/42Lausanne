@@ -17,11 +17,11 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 	echo "Creating wp-config.php..."
 	wp core config  --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=mariadb:3306 --allow-root
 	echo "Creating ADMIN user..."
-	wp core install --url=https://localhost:443 \
+	wp core install --url=https://localhost\
 		--title=ft_services \
-		--admin_user=$WP_USER \
-		--admin_password=$WP_PASSWORD \
-		--admin_email=$WP_USER_MAIL \
+		--admin_user=$WP_ADMIN_USER \
+		--admin_password=$WP_ADMIN_PASSWORD \
+		--admin_email=$WP_ADMIN_EMAIL \
 		--skip-email \
 		--allow-root 
 
@@ -31,6 +31,9 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
 		--role=author \
 		--user_pass=$WP_USER2_PASSWORD \
 		--allow-root 
+	
+	wp option update siteurl https://localhost --allow-root
+	wp option update home https://localhost --allow-root
 else
     echo "wp-config.php already exists. Skipping installation."
 fi
