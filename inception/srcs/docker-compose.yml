@@ -1,5 +1,18 @@
 version: '3'
-
+# volumes:
+#     wp:
+#         driver : local
+#         driver_opts:
+#             type: 'none'
+#             o: 'bind'
+#             device: '/Users/jolivier/Desktop/wp'
+#     db:
+#         driver : local
+#         driver_opts:
+#             type: 'none'
+#             o: 'bind'
+#             device: '/Users/jolivier/Document'
+  
 services:
   mariadb:
     container_name: mariadb
@@ -8,7 +21,7 @@ services:
     build: ./requirements/mariadb
     env_file: .env
     volumes:
-      - ~/Documents/data/wp_db:/var/lib/mysql
+      - db:/var/lib/mysql 
     restart: unless-stopped
     expose:
       - "3306"
@@ -17,7 +30,7 @@ services:
     container_name: wordpress
     env_file: .env
     volumes:
-      - ~/Documents/data/wp_files:/var/www/wordpress
+      - wp:/var/www/wordpress
     networks:
       - inception
     build: ./requirements/wordpress
@@ -29,10 +42,10 @@ services:
 
   nginx:
     container_name: nginx
-    volumes:
-      - ~/Documents/data/wp_files:/var/www/wordpress
     networks:
       - inception
+    volumes:
+      - wp:/var/www/wordpress
     depends_on:
       - wordpress
     build: requirements/nginx
@@ -40,6 +53,20 @@ services:
     ports:
       - "443:443"
     restart: on-failure
+
+volumes:
+    wp:
+        # driver : local
+        # driver_opts:
+        #     type: 'none'
+        #     o: 'bind'
+        #     device: '/Users/jolivier/Document/wp'
+    db:
+        # driver : local
+        # driver_opts:
+        #     type: 'none'
+        #     o: 'bind'
+        #     device: '/Users/jolivier/Document/db'
 
 networks:
   inception:

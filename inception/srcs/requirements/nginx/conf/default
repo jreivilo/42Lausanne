@@ -1,74 +1,106 @@
-# Config Nginx
-# (http://nginx.org/en/docs/http/configuring_https_servers.html)
 server {
-    # server name same as domain name
+    listen 443 ssl;
+	listen [::]:443 ssl;
     server_name localhost;
 
-    # listen to port 443 only, via ssl
-    # IPv4
-    listen 443 ssl;
-    # IPv6
-    listen [::]:443 ssl;
-
-    # set TLS version
-    ssl_protocols TLSv1.3;
-
-    # set TLS key and certificate files
     ssl_certificate /etc/ssl/certs/nginx.crt;
     ssl_certificate_key /etc/ssl/private/nginx.key;
 
-    # set index and root folder for wordpress
-    index index.php;
     root /var/www/wordpress;
+    index index.php index.html index.htm;
 
-    # tries to serve file/directiory, if it doesn't exist, issue error 404
-    # (https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
     location / {
-        try_files $uri $uri/ =404;
+        try_files $uri $uri/ /index.php?$args;
     }
 
-    # setup FastCGI parameters
-    # (http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_index)
-    # (https://www.digitalocean.com/community/tutorials/understanding-and-implementing-fastcgi-proxying-in-nginx)
-    location ~ \.php$ {
-        fastcgi_pass    wordpress:9000; # directive that passes requests to the backend (to container with name 'wordpress' on port 9000)
-        fastcgi_index   index.php; # defines the index file that will be appended $fast_script_name, if it ends with '/'
-        include         fastcgi_params;
-        fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name; # adds fastcgi_script_name to end of root
+	location ~ \.php$ {
+			try_files $uri =404;
+			fastcgi_split_path_info ^(.+\.php)(/.+)$;
+			fastcgi_pass wordpress:9000;
+			fastcgi_index index.php;
+			include fastcgi_params;
+			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+			fastcgi_param PATH_INFO $fastcgi_path_info;
+	}
+
+    location ~ /\.ht {
+        deny all;
     }
 }
+
+
+# # # Config Nginx
+# # # (http://nginx.org/en/docs/http/configuring_https_servers.html)
+# server {
+#     # server name same as domain name
+#     server_name localhost;
+
+#     # listen to port 443 only, via ssl
+#     # IPv4
+#     listen 443 ssl;
+#     # IPv6
+#     listen [::]:443 ssl;
+
+#     # set TLS version
+#     ssl_protocols TLSv1.3;
+
+#     # set TLS key and certificate files
+#     ssl_certificate /etc/ssl/certs/nginx.crt;
+#     ssl_certificate_key /etc/ssl/private/nginx.key;
+
+#     # set index and root folder for wordpress
+
+#     # tries to serve file/directiory, if it doesn't exist, issue error 404
+#     # (https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
+#     location / {
+#         try_files $uri $uri/ =404;
+#     }
+
+#     # setup FastCGI parameters
+#     # (http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_index)
+#     # (https://www.digitalocean.com/community/tutorials/understanding-and-implementing-fastcgi-proxying-in-nginx)
+#     location ~ \.php$ {
+# 		root /var/www/wordpress;
+# 	    index index.html index.htm index.php;
+#         fastcgi_pass    wordpress:9000; # directive that passes requests to the backend (to container with name 'wordpress' on port 9000)
+#         fastcgi_index   index.php; # defines the index file that will be appended $fast_script_name, if it ends with '/'
+#         include         fastcgi_params;
+#         fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name; # adds fastcgi_script_name to end of root
+#     }
+# }
 
 
 # events {
 # 	worker_connections 1024;
 # }
 
-# http {
-# 	server {
-# 		# SSL/TLS Configuration
-# 		listen 443 ssl;
-# 		listen [::]:443 ssl; # for ipv6
+# server {
+#     # server name same as domain name
+#     server_name localhost;
 
-# 		ssl_protocols TLSv1.2 TLSv1.3;
-# 		ssl_certificate /etc/nginx/ssl/inception.crt;
-# 		ssl_certificate_key /etc/nginx/ssl/inception.key;
+# 	# SSL/TLS Configuration
+# 	listen 443 ssl;
+# 	listen [::]:443 ssl; # for ipv6
 
-# 		# root, index, and server_name
-# 		root /var/www/html;
-# 		server_name localhost;
-# 		index index.php index.html index.htm;
-# 		# index index.php index.html index.htm;
+# 	ssl_protocols TLSv1.2 TLSv1.3;
+#     ssl_certificate /etc/ssl/certs/nginx.crt;
+#     ssl_certificate_key /etc/ssl/private/nginx.key;
 
-# 		location / {
-# 			try_files $uri $uri/ =404;
-# 		}
+# 	# root, index, and server_name
+# 	root /var/www/html;
+# 	server_name localhost;
+# 	index index.php index.html index.htm;
+# 	# index index.php index.html index.htm;
 
-# 		location ~ \.php$ {
-# 			include snippets/fastcgi-php.conf;
-# 			fastcgi_pass wordpress:9000;
-# 			include fastcgi_params;
-# 			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-# 			fastcgi_param PATH_INFO $fastcgi_path_info;
-# 		}
+# 	location / {
+# 		try_files $uri $uri/ =404;
+# 	}
+
+# 	location ~ \.php$ {
+# 		include snippets/fastcgi-php.conf;
+# 		fastcgi_pass wordpress:9000;
+# 		include fastcgi_params;
+# 		# fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+# 		# fastcgi_param PATH_INFO $fastcgi_path_info;
 # 	}
 # }
