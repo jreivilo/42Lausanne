@@ -1,17 +1,17 @@
 version: '3'
-# volumes:
-#     wp:
-#         driver : local
-#         driver_opts:
-#             type: 'none'
-#             o: 'bind'
-#             device: '/Users/jolivier/Desktop/wp'
-#     db:
-#         driver : local
-#         driver_opts:
-#             type: 'none'
-#             o: 'bind'
-#             device: '/Users/jolivier/Document'
+volumes:
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/jolivier/data/wordpress
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/jolivier/data/mariadb
   
 services:
   mariadb:
