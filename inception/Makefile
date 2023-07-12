@@ -5,22 +5,18 @@ RED=\x1b[31m
 CLO=\033[0m
 
 up:
-	@echo "$(BLU)"
 	@echo "// ************** //"
 	@echo "     STARTING       "
 	@echo "// ************** //"
-	@echo "$(CLO)"
 	@mkdir -p /home/jolivier/data &> /dev/null
 	@mkdir -p /home/jolivier/data/wordpress &> /dev/null
 	@mkdir -p /home/jolivier/data/mariadb &> /dev/null
 	@docker-compose -f $(FILE) up -d
 
 build:
-	@echo "$(GREE)"
 	@echo "// ************** //"
 	@echo "      BUILDING      "
 	@echo "// ************** //"
-	@echo "$(CLO)"
 	@docker-compose -f $(FILE) build
 
 start:
@@ -36,12 +32,10 @@ clean:
 	@docker-compose -f $(FILE) down -v
 
 msg:
-	@echo "$(RED)"
 	@echo "// ************** //"
 	@echo "     SHUTDOWN       "
 	@echo "     CLEANING       "
 	@echo "// ************** //"
-	@echo "$(CLO)"
 
 fclean: msg down clean 
 	@docker rmi nginx:jolivier
