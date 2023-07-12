@@ -1,17 +1,18 @@
 version: '3'
+
 volumes:
-  wp:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /Users/jolivier/data/wordpress
   db:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/jolivier/data/mariadb
+      device: /home/jolivier/data/mariadb
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/jolivier/data/wordpress
   
 services:
   mariadb:
@@ -53,20 +54,6 @@ services:
     ports:
       - "443:443"
     restart: on-failure
-
-volumes:
-    wp:
-        # driver : local
-        # driver_opts:
-        #     type: 'none'
-        #     o: 'bind'
-        #     device: '/Users/jolivier/Document/wp'
-    db:
-        # driver : local
-        # driver_opts:
-        #     type: 'none'
-        #     o: 'bind'
-        #     device: '/Users/jolivier/Document/db'
 
 networks:
   inception:
