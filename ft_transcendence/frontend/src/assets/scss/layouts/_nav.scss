@@ -1,0 +1,72 @@
+.nav{
+    // width: 100%;
+	width: 25%;
+	height: 100vh;
+	@include padding;
+	padding-top: 20px;
+	background: linear-gradient(to right bottom, #d195ae, #654ea3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+	h2{
+		// background-color: aquamarine;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 50px;
+		border-radius: 5px;
+		font-size: 1.5rem;
+		margin-bottom: 20px;
+	}
+    
+    ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        list-style: none;
+    }
+    li {
+        padding: 5px;
+    }
+
+	&_logout{
+		height: 30px;
+		border-radius: 10px;
+		width: auto;
+		//padding: 0 20px 0 10px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content:space-around;
+		background-color: $alert-color;
+
+		&Img{
+			height: 25px;
+		}
+	}
+    
+    &_h{
+        @include btn_nav($secondary-color);
+
+		&Title{
+			background-color: $secondary-color;
+		}
+    }
+    &_f{
+        @include btn_nav($tertiary-color);
+		&Title{
+			background-color: $tertiary-color;
+		}
+    }
+    &_c{
+        @include btn_nav($quaternary-color);
+		&Title{
+			background-color: $quaternary-color;
+		}
+    }
+	&_g{
+		@include btn_nav($secondary-color);
+		&Title{
+			background-color: $secondary-color;
+		}
+	}
+}

@@ -1,0 +1,27 @@
+// Tailwind
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Resets:
+@import 'reset/_reset';
+@import 'reset/_link';
+
+// Components:
+@import 'components/_btn_nav';
+@import 'components/mini_profile';
+@import 'components/btn_list_nav';
+@import 'components/modal';
+
+// Utils:
+@import 'utils/_variables';
+@import 'utils/_fonts';
+
+// Layouts:
+@import 'layouts/_nav';
+
+// Pages:
+@import 'pages/_app';
+@import 'pages/_index';
+@import 'pages/_login';
+//@import 'pages/_profile';

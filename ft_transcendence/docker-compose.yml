@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:15.4
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${SQL_DATABASE}
+      POSTGRES_USER: ${SQL_USER}
+      POSTGRES_PASSWORD: ${SQL_PASSWORD}
+    networks:
+      - transcendence
+    healthcheck:
+      test: pg_isready -U ${SQL_USER} -d ${SQL_DATABASE}
+      interval: 5s
+      start_period: 10s
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    env_file: .env
+    environment:
+      REACT_APP_PUBLIC_URL: ${FRONT_URL}
+      REACT_APP_BACKEND_URL: ${BACK_URL}
+      REACT_APP_BACKEND_SOCKET: ${SOCKET_URL}
+      WDS_SOCKET_PATH: /ws
+      WDS_SOCKET_PORT: 443
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - transcendence
+  
+  backend:
+    image: node:20.9.0-alpine3.17
+    container_name: backend
+    env_file: .env
+    build: ./backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend/src:/app/src
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - transcendence
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx:/etc/nginx
+    depends_on:
+      - frontend
+    networks:
+      - transcendence
+
+networks:
+  transcendence:
+    name: transcendence
+    driver: bridge

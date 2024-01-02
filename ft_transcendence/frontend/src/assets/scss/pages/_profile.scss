@@ -1,0 +1,114 @@
+/*
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    //min-height: 100vh;
+}
+
+.centered-text {
+    font-size: 24px;
+    color: #333;
+    display: inline-block;
+    //border: 2px solid #fdfdfd;
+    padding: 10px;
+    //background: #0c999c;
+    border-radius: 10px;
+
+    &:hover {
+        border-color: #fdfdfd;
+        border-width: 3px;
+    }
+}
+/*
+.user-name {
+    bottom: 10;
+    font-size: 30px; /* Ajustez la taille de la police pour le nom d'utilisateur */
+/*    color: #333;
+    margin: 100px; /* Ajoutez de la marge autour du nom de l'utilisateur */
+//}
+/*
+.centered-UserName {
+    font-size: 120px;
+    //display: flex;
+    //justify-content: right;
+    color: #045d84;
+    //display: center;
+   // border: 2px solid #ccc;
+    //padding: 10px;
+    /* Ajoute de l'espace entre le texte et la bordure */
+    //background: #0c999c;
+    /* Facultatif : ajoutez un arrière-plan */
+    //border-radius: 30px;
+  //  align-self: center;
+//}
+/*
+.photo-container {
+    position: relative;
+    display: inline-block;
+    display: flex;
+    justify-content : flex-start;
+    align-items: center;
+}
+
+.photo-container img {
+    display: block;
+    border-radius: 10%; 
+    width: 250px; 
+    height: 250px;
+    border: 2px solid #ccc;
+
+    &:hover {
+        border-color: #188b78;
+        border-width: 3px;
+    }
+  }
+*/
+/*
+  .status-bubble {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    position: relative;
+    bottom: -103px;
+    left: -45px;
+    border: 2px solid white;
+    z-index: 1;
+}
+
+.online {
+    background-color: green;
+}
+
+.offline {
+    background-color: red;
+}
+
+.Information {
+
+    display:flex;
+    justify-content :center;
+    align-items: center;
+    font-size: 50px;
+    bottom: px;
+
+
+}
+
+.stat-container {
+
+    font-size: 30px;
+}
+
+.logo {
+
+    width: 50px;
+}
+.history {
+
+    display: flex;
+    justify-content: center;
+    align-items : flex-end;
+    font-size : 50px;
+
+}

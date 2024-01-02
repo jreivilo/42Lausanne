@@ -1,0 +1,15 @@
+.btn_list_nav{
+    height: 40px;
+    border-radius: 10px;
+    width: auto;
+   // padding: 0 30px 0 10px;
+   // display: flex;
+   // flex-direction: row;
+   // align-items: center;
+    justify-content:space-between;
+    //background-color: black;
+
+    &Img{
+        height: 25px;
+    }
+}

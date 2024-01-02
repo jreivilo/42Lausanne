@@ -1,0 +1,16 @@
+$primary-color: #423e5c;
+$secondary-color: #5685ff;
+$tertiary-color: #ffcc97;
+$quaternary-color: #ff7594;
+$alert-color: #ef4444;
+
+@mixin center{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin padding{
+    padding: 10px;
+}

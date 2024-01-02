@@ -1,0 +1,107 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id             Int          @id @default(autoincrement())
+  login          String       @unique
+  username       String       @unique
+  status         Status       @default(offline)
+  avatar         String
+  twofactor      Boolean      @default(false)
+  hash2FA        String?
+  create_at      DateTime     @default(now())
+  update_at      DateTime     @updatedAt
+  delete_at      DateTime?
+  posts          Posts[]
+  hostGame       Games[]      @relation("hostGame")
+  inviteGame     Games[]      @relation("inviteGame")
+  hostChatroom   Chatrooms[]  @relation("hostChatroom")
+  inviteChatroom Chatrooms[]  @relation("inviteChatroom")
+  Tournaments    Tournaments? @relation(fields: [tournamentsId], references: [id])
+  tournamentsId  Int?
+}
+
+model Chatrooms {
+  id         Int       @id @default(autoincrement())
+  user1Id    Int
+  user1      Users     @relation(fields: [user1Id], references: [id], name: "hostChatroom")
+  user1Block Boolean   @default(false)
+  user2Id    Int
+  user2      Users     @relation(fields: [user2Id], references: [id], name: "inviteChatroom")
+  user2Block Boolean   @default(false)
+  posts      Posts[]
+  create_at  DateTime  @default(now())
+  update_at  DateTime  @default(now())
+  delete_at  DateTime?
+}
+
+model Posts {
+  id         Int       @id @default(autoincrement())
+  text       String
+  authorId   Int
+  author     Users     @relation(fields: [authorId], references: [id])
+  chatroomId Int
+  chatroom   Chatrooms @relation(fields: [chatroomId], references: [id], onDelete: Cascade)
+  create_at  DateTime  @default(now())
+  update_at  DateTime  @updatedAt
+  delete_at  DateTime?
+}
+
+model Games {
+  id            Int          @id @default(autoincrement())
+  user1Id       Int
+  user1Score    Int
+  user1         Users        @relation(fields: [user1Id], references: [id], name: "hostGame")
+  user2Id       Int
+  user2Score    Int
+  user2         Users        @relation(fields: [user2Id], references: [id], name: "inviteGame")
+  create_at     DateTime     @default(now())
+  update_at     DateTime     @updatedAt
+  delete_at     DateTime?
+  Tournaments   Tournaments? @relation(fields: [tournamentsId], references: [id])
+  tournamentsId Int?
+}
+
+model Tournaments {
+  id        Int       @id @default(autoincrement())
+  status    TStatus
+  players   Users[]
+  aliases   Aliases[]
+  games     Games[]
+  create_at DateTime  @default(now())
+  update_at DateTime  @updatedAt
+  delete_at DateTime?
+}
+
+model Aliases {
+  id            Int          @id @default(autoincrement())
+  userId        Int
+  alias         String
+  Tournaments   Tournaments? @relation(fields: [tournamentsId], references: [id])
+  tournamentsId Int?
+}
+
+enum TStatus {
+  not_started
+  running
+  done
+}
+
+enum Status {
+  online
+  ingame
+  offline
+}
+
+enum dmStatus {
+  pending
+  accepted
+  blocked
+}
