@@ -27,12 +27,12 @@ def update_theta(dataset, theta0, theta1, learning_rate):
     m = len(dataset)
 
     for km, price in dataset.itertuples(index=False):
-        y_pred = estimate_price(km, theta0, theta1)
-        sum_errors_theta0 += price - y_pred
-        sum_errors_theta1 += (price - y_pred) * km
+        error = estimate_price(km, theta0, theta1) - price
+        sum_errors_theta0 += error
+        sum_errors_theta1 += error * km  # Fixed the error calculation for theta1
     
     tmp_theta0 = theta0 - learning_rate * (1 / m) * sum_errors_theta0
-    tmp_theta1 = theta1 + learning_rate * (1 / m) * sum_errors_theta1
+    tmp_theta1 = theta1 - learning_rate * (1 / m) * sum_errors_theta1
     
     # print(f"θ0 = {tmp_theta0}, θ1 = {tmp_theta1}")
     return tmp_theta0, tmp_theta1
