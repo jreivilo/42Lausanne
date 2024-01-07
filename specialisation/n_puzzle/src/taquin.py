@@ -1,4 +1,8 @@
 import random
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+import numpy as np
 import heapq # for priority queue
 
 def generate_taquin(n):
@@ -75,7 +79,27 @@ def manhattan_distance(state, goal):
                 distance += abs(x_goal - x_state) + abs(y_goal - y_state)
     return distance
 
-def solve(taquin):
+def euclidean_distance(state, goal):
+    n = len(state)
+    distance = 0
+    for i in range(n):
+        for j in range(n):
+            if state[i][j] != goal[i][j] and state[i][j] != 0:
+                x_goal, y_goal = divmod(goal[i][j] - 1, n)
+                x_state, y_state = divmod(state[i][j] - 1, n)
+                distance += np.sqrt((x_goal - x_state)**2 + (y_goal - y_state)**2)
+    return distance
+
+def hamming_distance(state, goal):
+    n = len(state)
+    distance = 0
+    for i in range(n):
+        for j in range(n):
+            if state[i][j] != goal[i][j] and state[i][j] != 0:
+                distance += 1
+    return distance
+
+def solve(taquin, heuristic):
     n = len(taquin)
     goal = [list(range(i * n + 1, (i + 1) * n + 1)) for i in range(n)]
     goal[-1][-1] = 0
@@ -105,13 +129,22 @@ def solve(taquin):
 
         for move in get_possible_moves(state):
             new_state = move_tile(state, move)
-            new_state_tuple = tuple(tuple(row) for row in new_state)
+            new_state_tuple = tuple(tuple(row) for row in new_state)  # from list of lists to tuple of tuples
             if new_state_tuple not in visited:
                 visited.add(new_state_tuple)
                 new_path = path + [new_state]
                 new_cost = cost + 1
-                heuristic = manhattan_distance(new_state, goal)
-                heapq.heappush(priority_queue, (new_cost + heuristic, new_state, new_cost, new_path))
+
+                if heuristic == "manhattan":
+                    h = manhattan_distance(new_state, goal)
+                elif heuristic == "euclidean":
+                    h = euclidean_distance(new_state, goal)
+                elif heuristic == "hamming":
+                    h = hamming_distance(new_state, goal)
+                else:
+                    raise ValueError("Invalid heuristic function")
+
+                heapq.heappush(priority_queue, (new_cost + h, new_state, new_cost, new_path))
 
     return None
 
@@ -119,28 +152,56 @@ def print_taquin(taquin):
     for row in taquin:
         print(row)
 
+def main():
+    choice = input("Do you want to load the taquin from a file? (yes/no): ").strip().lower()
 
-n = int(input("Enter the size of the taquin game: "))
-taquin = generate_taquin(n)
-print("Initial taquin:")
-print_taquin(taquin)
-
-if is_solvable(taquin):
-    print("The taquin is solvable")
-
-    if is_solved(taquin):
-        print("The taquin is already solved")
+    if choice == 'yes':
+        file_path = input("Enter the file path of the taquin game: ")
+        try:
+            with open(file_path, 'r') as file:
+                lines = file.readlines()
+                n = int(lines[0].strip())  # Assuming the first line contains the size
+                taquin = [[int(num) for num in line.split()] for line in lines[1:n+1]]
+        except Exception as e:
+            print(f"An error occurred while reading the file: {e}")
+            return
     else:
-        result = solve(taquin)
-        if result:
-            print(f"Total number of states opened: {result['total_states_opened']}")
-            print(f"Maximum number of states in memory: {result['max_states_in_memory']}")
-            print(f"Number of moves to solve: {result['solution_cost']}")
-            print("Solution Path (sequence of states):")
-            for state in result['solution_path']:
-                print()
-                print_taquin(state)
+        try:
+            n = int(input("Enter the size of the taquin game: "))
+            taquin = generate_taquin(n)
+        except ValueError:
+            print("Invalid input")
+            return
+
+    print("Initial taquin:")
+    print_taquin(taquin)
+
+    heuristic = input("Choose the heuristic function (manhattan, euclidean, hamming), default is manhattan: ")
+    if heuristic not in ["manhattan", "euclidean", "hamming"]:
+        heuristic = "manhattan"
+
+    if is_solvable(taquin):
+        print("The taquin is solvable")
+
+        if is_solved(taquin):
+            print("The taquin is already solved")
         else:
-            print("No solution found.")
-else:
-    print("The taquin is not solvable")
+            result = solve(taquin, heuristic)
+            if result:
+                for state in result['solution_path']:
+                    print()
+                    print_taquin(state)
+                    print()
+                print("\033[92m")  # Print in green
+                print(f"Total number of states opened: {result['total_states_opened']}")
+                print(f"Maximum number of states in memory: {result['max_states_in_memory']}")
+                print(f"Number of moves to solve: {result['solution_cost']}")
+                print("Solution Path (sequence of states):")
+                print("\033[0m")
+            else:
+                print("No solution found.")
+    else:
+        print("The taquin is not solvable")
+
+if __name__ == "__main__":
+    main()
