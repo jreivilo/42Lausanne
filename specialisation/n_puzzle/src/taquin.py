@@ -1,4 +1,5 @@
 import random
+import heapq # for priority queue
 
 def generate_taquin(n):
     numbers = list(range(1, n*n))
@@ -69,7 +70,7 @@ def manhattan_distance(state, goal):
     for i in range(n):
         for j in range(n):
             if state[i][j] != goal[i][j] and state[i][j] != 0:
-                x_goal, y_goal = divmod(goal[i][j] - 1, n) 
+                x_goal, y_goal = divmod(goal[i][j] - 1, n)
                 x_state, y_state = divmod(state[i][j] - 1, n)
                 distance += abs(x_goal - x_state) + abs(y_goal - y_state)
     return distance
@@ -79,17 +80,20 @@ def solve(taquin):
     goal = [list(range(i * n + 1, (i + 1) * n + 1)) for i in range(n)]
     goal[-1][-1] = 0
 
+    priority_queue = []
+    heapq.heappush(priority_queue, (0, taquin, 0, []))  # (priority, state, cost, path)
+
     visited = set()
     visited.add(tuple(tuple(row) for row in taquin))
 
-    queue = [(taquin, 0, [])] # (state, cost, path)
     total_states_opened = 0
     max_states_in_memory = 0
 
-    while queue:
-        state, cost, path = queue.pop(0) #pop the first element
+    while priority_queue:
+        max_states_in_memory = max(max_states_in_memory, len(priority_queue))
+
+        _, state, cost, path = heapq.heappop(priority_queue)
         total_states_opened += 1
-        max_states_in_memory = max(max_states_in_memory, len(queue))
 
         if is_solved(state):
             return {
@@ -101,11 +105,13 @@ def solve(taquin):
 
         for move in get_possible_moves(state):
             new_state = move_tile(state, move)
-            if tuple(tuple(row) for row in new_state) not in visited: # Check if the state has already been visited
-                visited.add(tuple(tuple(row) for row in new_state))
-                new_path = path + [new_state]  # Storing the move instead of the state
-                # print(f"new_path: {new_path}")
-                queue.append((new_state, cost + 1, new_path))
+            new_state_tuple = tuple(tuple(row) for row in new_state)
+            if new_state_tuple not in visited:
+                visited.add(new_state_tuple)
+                new_path = path + [new_state]
+                new_cost = cost + 1
+                heuristic = manhattan_distance(new_state, goal)
+                heapq.heappush(priority_queue, (new_cost + heuristic, new_state, new_cost, new_path))
 
     return None
 
@@ -127,7 +133,6 @@ if is_solvable(taquin):
     else:
         result = solve(taquin)
         if result:
-            print("The taquin is not solved yet, but it's solvable.")
             print(f"Total number of states opened: {result['total_states_opened']}")
             print(f"Maximum number of states in memory: {result['max_states_in_memory']}")
             print(f"Number of moves to solve: {result['solution_cost']}")
