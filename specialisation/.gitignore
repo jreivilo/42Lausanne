@@ -1,0 +1,5 @@
+*.png
+*.JPG
+poetry.lock
+__pycache__/
+
