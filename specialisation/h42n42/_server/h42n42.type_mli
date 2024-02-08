@@ -1,0 +1,13 @@
+val __eliom__compilation_unit_id__eZ0bjX : string
+module H42n42_app : Eliom_registration.APP
+val init_river : [> Html_types.div ] Eliom_content.Html.D.elt
+val init_ground : [> Html_types.div ] Eliom_content.Html.D.elt
+val init_hospital : [> Html_types.div ] Eliom_content.Html.D.elt
+val init_board : [> Html_types.div ] Eliom_content.Html.D.elt
+val page : [> Html_types.body ] Eliom_content.Html.D.elt
+val main_service :
+  (unit, unit, Eliom_service.get, Eliom_service.att, Eliom_service.non_co,
+   Eliom_service.non_ext, Eliom_service.reg, [ `WithoutSuffix ], unit, 
+   unit, Eliom_service.non_ocaml)
+  Eliom_service.t
+val _eliom_fragment_eZ0bjX1 : unit Eliom_client_value.t option ref

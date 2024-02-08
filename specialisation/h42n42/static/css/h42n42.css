@@ -1,0 +1,71 @@
+* {
+    font-family: sans-serif;
+}
+
+.board {
+	position: absolute;
+	width: 500px;
+	height: 500px;
+	border: 1px solid black;
+}
+
+.river {
+	width: 500px;
+	height: 50px;
+	background-color: rgb(196, 182, 23)
+}
+
+.ground {
+	width: 500px;
+	height: 400px;
+	background-color: rgb(207, 24, 158);
+}
+
+.hospital {
+	width: 500px;
+	height: 50px;
+	background-color: red;
+	position: relative;
+}
+
+.white_cross {
+    position: absolute;
+    width: 10px; /* Vertical bar width */
+    height: 50px; /* Match .hospital height for vertical bar */
+    background-color: white;
+}
+
+.white_cross::before {
+    content: "";
+    position: absolute;
+    width: 50px; /* Horizontal bar width */
+    height: 10px; /* Horizontal bar thickness */
+    background-color: white;
+    top: 50%;
+    left: -20px; /* Center the horizontal bar */
+    transform: translateY(-50%);
+}
+
+#left_cross {
+    left: 50pt; /* Position at the left edge */
+    transform: translateX(0%); /* Adjust if needed */
+}
+
+#middle_cross {
+    left: 50%; /* Center */
+    transform: translateX(-50%);
+}
+
+#right_cross {
+    right: 50pt; /* Position at the right edge */
+    transform: translateX(0%); /* Adjust if needed */
+}
+
+.creep {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background-color: yellow;
+	border: 1px solid black;
+	transition: transform 2s linear; /* Example transition for movement */
+}

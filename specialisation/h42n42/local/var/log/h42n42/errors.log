@@ -1,0 +1,2 @@
+Jan 31 18:19:16: main: Fatal - Findlib package ocsipersist.pgsql not found: maybe you forgot <findlib path="..."/>?
+Jan 31 18:21:43: main: Fatal - Error in configuration file: Incorrect hostname LAPTOP-MFQ0UF7N.
