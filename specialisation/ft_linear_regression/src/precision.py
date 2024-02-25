@@ -33,6 +33,10 @@ def main():
 			theta0, theta1 = file.read().split(",")
 			theta0 = float(theta0)
 			theta1 = float(theta1)
+   
+	if theta0 == 0 and theta1 == 0:
+		print("Model not trained. Please train the model first.")
+		return
 
 	df = pd.read_csv("data/data.csv")
 
