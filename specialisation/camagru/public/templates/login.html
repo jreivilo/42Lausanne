@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <form method="post" action="../src/login.php">
+        Username: <input type="text" name="username"><br>
+        Password: <input type="password" name="password"><br>
+        <input type="submit" value="Login">
+        <!-- Display error message if it exists -->
+        <?php if (isset($error)) echo "<p>$error</p>"; ?>
+    </form>
+</body>
+</html>

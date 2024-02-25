@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "8000:80" # map the port 80 of the container to port 8000 on your host
+    volumes:
+      - .:/var/www/html # mount the current directory to /var/www/html
+  db:
+    image: mysql
+    volumes:
+      - db_data:/var/lib/mysql # mount the data directory to /var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d # mount the init script to the container, this will be executed on the first run
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+volumes:
+  db_data:
