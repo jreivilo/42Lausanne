@@ -5,13 +5,41 @@ import random
 import numpy as np
 import heapq # for priority queue
 
-def generate_taquin(n):
-    numbers = list(range(1, n*n))
-    random.shuffle(numbers)
-    empty_tile = random.randint(0, n*n-1)
-    numbers.insert(empty_tile, 0)
-    taquin = [numbers[i:i+n] for i in range(0, n*n, n)]
-    return taquin
+def is_solvable(board):
+    # Flatten the board list and count inversions.
+    flat_board = [j for sub in board for j in sub if j != 0]
+    inversions = 0
+    for i in range(len(flat_board)):
+        for j in range(i + 1, len(flat_board)):
+            if flat_board[i] > flat_board[j]:
+                inversions += 1
+    # For a 4x4 board (or any even-sized board), the puzzle is solvable if:
+    # the blank is on an even row counting from the bottom and number of inversions is odd,
+    # or the blank is on an odd row from the bottom and number of inversions is even.
+    blank_row_from_bottom = 4 - (flat_board.index(0) // 4)
+    return (blank_row_from_bottom % 2 == 0) == (inversions % 2 == 1)
+
+def shuffle_board(board, moves=1000):
+    for _ in range(moves):
+        # Find the empty space.
+        empty_row, empty_col = next((r, c) for r, row in enumerate(board) for c, val in enumerate(row) if val == 0)
+        # Generate a list of legal moves (up, down, left, right) that don't go off the board.
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        legal_moves = [(empty_row + dx, empty_col + dy) for dx, dy in directions if 0 <= empty_row + dx < len(board) and 0 <= empty_col + dy < len(board[0])]
+        # Pick a random legal move and execute it.
+        move_row, move_col = random.choice(legal_moves)
+        board[empty_row][empty_col], board[move_row][move_col] = board[move_row][move_col], board[empty_row][empty_col]
+    return board
+
+def generate_taquin(size=4):
+    # Initialize the board in solved state.
+    board = [[n + i*size for n in range(1, size+1)] for i in range(size)]
+    board[-1][-1] = 0  # Set the last tile as empty.
+    shuffled_board = shuffle_board(board)
+    # Ensure the shuffled board is solvable; if not, reshuffle.
+    while not is_solvable(shuffled_board):
+        shuffled_board = shuffle_board(board)
+    return shuffled_board
 
 def is_solvable(taquin):
     n = len(taquin)
@@ -99,6 +127,93 @@ def hamming_distance(state, goal):
                 distance += 1
     return distance
 
+def solve_greedy(taquin, heuristic):
+    n = len(taquin)
+    goal = [list(range(i * n + 1, (i + 1) * n + 1)) for i in range(n)]
+    goal[-1][-1] = 0
+
+    priority_queue = []
+    heapq.heappush(priority_queue, (0, taquin, []))  # (priority, state, path)
+
+    visited = set()
+    visited.add(tuple(tuple(row) for row in taquin))
+
+    total_states_opened = 0
+    max_states_in_memory = 0
+
+    while priority_queue:
+        max_states_in_memory = max(max_states_in_memory, len(priority_queue))
+
+        h_cost, state, path = heapq.heappop(priority_queue)
+        total_states_opened += 1
+
+        if is_solved(state):
+            return {
+                "total_states_opened": total_states_opened,
+                "max_states_in_memory": max_states_in_memory,
+                "solution_cost": len(path),
+                "solution_path": path
+            }
+
+        for move in get_possible_moves(state):
+            new_state = move_tile(state, move)
+            new_state_tuple = tuple(tuple(row) for row in new_state)  # from list of lists to tuple of tuples
+            if new_state_tuple not in visited:
+                visited.add(new_state_tuple)
+                new_path = path + [new_state]
+
+                if heuristic == "manhattan":
+                    h = manhattan_distance(new_state, goal)
+                elif heuristic == "euclidean":
+                    h = euclidean_distance(new_state, goal)
+                elif heuristic == "hamming":
+                    h = hamming_distance(new_state, goal)
+                else:
+                    raise ValueError("Invalid heuristic function")
+
+                heapq.heappush(priority_queue, (h, new_state, new_path))
+
+    return None
+
+def solve_uniform_cost(taquin):
+    n = len(taquin)
+    goal = [list(range(i * n + 1, (i + 1) * n + 1)) for i in range(n)]
+    goal[-1][-1] = 0
+
+    priority_queue = []
+    heapq.heappush(priority_queue, (0, taquin, []))  # (path cost, state, path)
+
+    visited = set()
+    visited.add(tuple(tuple(row) for row in taquin))
+
+    total_states_opened = 0
+    max_states_in_memory = 0
+
+    while priority_queue:
+        max_states_in_memory = max(max_states_in_memory, len(priority_queue))
+
+        cost, state, path = heapq.heappop(priority_queue)
+        total_states_opened += 1
+
+        if is_solved(state):
+            return {
+                "total_states_opened": total_states_opened,
+                "max_states_in_memory": max_states_in_memory,
+                "solution_cost": cost,
+                "solution_path": path
+            }
+
+        for move in get_possible_moves(state):
+            new_state = move_tile(state, move)
+            new_state_tuple = tuple(tuple(row) for row in new_state)
+            if new_state_tuple not in visited:
+                visited.add(new_state_tuple)
+                new_path = path + [new_state]
+                heapq.heappush(priority_queue, (cost + 1, new_state, new_path))
+
+    return None
+
+
 def solve(taquin, heuristic):
     n = len(taquin)
     goal = [list(range(i * n + 1, (i + 1) * n + 1)) for i in range(n)]
@@ -144,7 +259,7 @@ def solve(taquin, heuristic):
                 else:
                     raise ValueError("Invalid heuristic function")
 
-                heapq.heappush(priority_queue, (new_cost + h, new_state, new_cost, new_path))
+                heapq.heappush(priority_queue, (new_cost + h, new_state, new_cost, new_path)) #
 
     return None
 
@@ -179,6 +294,10 @@ def main():
     heuristic = input("Choose the heuristic function (manhattan, euclidean, hamming), default is manhattan: ")
     if heuristic not in ["manhattan", "euclidean", "hamming"]:
         heuristic = "manhattan"
+        
+    model = input("Choose the model (a*, greedy or uniform cost), default is a*: ")
+    if model not in ["a*", "greedy", "uniform cost"]:
+        model = "a*"
 
     if is_solvable(taquin):
         print("The taquin is solvable")
@@ -186,7 +305,16 @@ def main():
         if is_solved(taquin):
             print("The taquin is already solved")
         else:
-            result = solve(taquin, heuristic)
+            print("Solving the taquin...")
+            if model == "a*":
+                print("Using A* algorithm")
+                result = solve(taquin, heuristic)
+            elif model == "greedy":
+                print("Using Greedy algorithm")
+                result = solve_greedy(taquin, heuristic)
+            else:
+                print("Using Uniform Cost algorithm")
+                result = solve_uniform_cost(taquin)
             if result:
                 for state in result['solution_path']:
                     print()
@@ -196,7 +324,7 @@ def main():
                 print(f"Total number of states opened: {result['total_states_opened']}")
                 print(f"Maximum number of states in memory: {result['max_states_in_memory']}")
                 print(f"Number of moves to solve: {result['solution_cost']}")
-                print("Solution Path (sequence of states):")
+                # print("Solution Path (sequence of states):")
                 print("\033[0m")
             else:
                 print("No solution found.")
