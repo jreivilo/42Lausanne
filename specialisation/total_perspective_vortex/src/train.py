@@ -14,7 +14,7 @@ from joblib import dump
 
 
 BASELINE = [1, 2]
-TASK_1 = [3, 7, 11]
+TASK_1 = [3, 7, 11]	
 TASK_2 = [4, 8, 12]
 TASK_3 = [5, 9, 13]
 TASK_4 = [6, 10, 14]
