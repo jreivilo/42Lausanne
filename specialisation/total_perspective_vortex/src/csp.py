@@ -21,13 +21,15 @@ def compute_cov_matrices(X, y, classes):
 
 
 class CustomCSP(TransformerMixin, BaseEstimator):
-	def __init__(self, n_components=4):
+	def __init__(self, n_components=4, log=True, reg=None):
 		self.n_components = n_components
 		self.filters_ = None
 		self.mean = 0
 		self.std = 0
+		self.log = log
+		self.reg = reg
 
- 
+
 	def fit(self, X, y):
 		covs = compute_cov_matrices(X, y, np.unique(y)) #one covariance matrix per class
 		eigen_values, eigen_vectors = linalg.eigh(covs[0], covs.sum(0))
@@ -43,8 +45,12 @@ class CustomCSP(TransformerMixin, BaseEstimator):
 		# Apply spatial filters to each epoch
 		X = np.asarray([np.dot(pick_filters, epoch) for epoch in X])
 		X = (X ** 2).mean(axis=2) 
-		X -= X.mean(axis=0)
-		X /= X.std(axis=0)
+
+		if self.log:
+			X = np.log(X)
+		else:
+			X -= X.mean(axis=0)
+			X /= X.std(axis=0)
 		return X
 
 	def fit_transform(self, X, y):

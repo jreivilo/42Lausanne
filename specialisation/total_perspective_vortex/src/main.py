@@ -72,7 +72,7 @@ def get_file_names(subject, task_number, control=False):
     return file_names
 
 def create_pipeline():
-    csp = CustomCSP(n_components=16)
+    csp = CustomCSP(n_components=32, reg='empirical', log=True)
     # lgbm = LGBMClassifier()
     # lr = LogisticRegression(random_state=42)
     svm = SVC(kernel='linear', C=1, random_state=42)
@@ -103,12 +103,12 @@ def load_epoch_data(task, subjects):
 def load_epoch_data_control(task, control=False):
 	files = []
 	epochs_data = []
-	subject = list(range(1, 25))
-	# subject.remove(88)
-	# subject.remove(92)
-	# subject.remove(100)
+	subjects = list(range(1, 110))
+	subjects.remove(88) #wrong fs_freq
+	subjects.remove(92) #wrong fs_freq
+	subjects.remove(100) #wrong fs_freq
  
-	for subject in subject:
+	for subject in subjects:
 		files.extend(get_file_names_control(subject, task, control))
 	for file_name in files:
 		# Load the data

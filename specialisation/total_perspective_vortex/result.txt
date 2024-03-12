@@ -35,3 +35,9 @@ Accuracy for task 2: 0.6187954996690933
 Accuracy for task 3: 0.6047745358090185
 Accuracy for task 4: 0.599602911978822
 Mean accuracy: 0.6073184358032255
+
+Accuracy for task 1: 0.6067639257294429
+Accuracy for task 2: 0.6181336863004633
+Accuracy for task 3: 0.6041114058355438
+Accuracy for task 4: 0.599602911978822
+Mean accuracy: 0.607152982461068
