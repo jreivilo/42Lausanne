@@ -12,49 +12,13 @@ from mne.decoding import CSP
 import argparse
 from joblib import dump
 
+from csp import CustomCSP
+
 #import lgmbclassifier
 from lightgbm import LGBMClassifier
 
 #import svm omdel
 from sklearn.svm import SVC
-
-class CustomCSP(BaseEstimator, TransformerMixin):
-	def __init__(self, n_components=4):
-		self.n_components = n_components
-		self.filters_ = None
-		self.patterns_ = None
-
-	def fit(self, X, y):
-		# Ensure the input is what we expect
-		eeg_data_class1 = X[y == np.unique(y)[0]]
-		eeg_data_class2 = X[y == np.unique(y)[1]]
-		print(f"shape of eeg_data_class1: {eeg_data_class1.shape}")
-		print("Coucou1")
-		# Compute covariance matrices
-		cov_class1 = np.mean([np.dot(trial.T, trial) for trial in eeg_data_class1], axis=0)
-		#delete eeg_data_class1
-		print("Coucou2delete eeg_data_class1")
-		del eeg_data_class1		
-
-		cov_class2 = np.mean([np.dot(trial.T, trial) for trial in eeg_data_class2], axis=0)
-		print("Coucou2")
-		# Composite covariance matrix
-		cov_composite = cov_class1 + cov_class2
-
-		# Solve the eigenvalue problem
-		eigen_values, eigen_vectors = np.linalg.eig(np.linalg.pinv(cov_composite).dot(cov_class1))
-		print("Coucou2")	
-		# Sort the eigenvalues and eigenvectors
-		sort_indices = np.argsort(eigen_values)[::-1]
-		self.filters_ = eigen_vectors[:, sort_indices][:, :self.n_components]
-		self.patterns_ = np.linalg.inv(self.filters_.T)
-
-		print("Coucou")
-		return self
-
-	def transform(self, X):
-		# Apply the spatial filters to the data
-		return np.array([np.dot(self.filters_.T, trial) for trial in X])
 
 BASELINE = [1, 2]
 TASK_1 = [3, 7, 11]
@@ -108,7 +72,7 @@ def get_file_names(subject, task_number, control=False):
     return file_names
 
 def create_pipeline():
-    csp = CustomCSP(n_components=32)
+    csp = CustomCSP(n_components=16)
     # lgbm = LGBMClassifier()
     # lr = LogisticRegression(random_state=42)
     svm = SVC(kernel='linear', C=1, random_state=42)
@@ -139,10 +103,10 @@ def load_epoch_data(task, subjects):
 def load_epoch_data_control(task, control=False):
 	files = []
 	epochs_data = []
-	subject = list(range(1, 110))
-	subject.remove(88)
-	subject.remove(92)
-	subject.remove(100)
+	subject = list(range(1, 25))
+	# subject.remove(88)
+	# subject.remove(92)
+	# subject.remove(100)
  
 	for subject in subject:
 		files.extend(get_file_names_control(subject, task, control))

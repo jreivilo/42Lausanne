@@ -1,0 +1,37 @@
+8 lr
+Accuracy for task 1: 0.5861650485436893
+Accuracy for task 2: 0.5700245700245701
+Accuracy for task 3: 0.5055900621118012
+Accuracy for task 4: 0.5936352509179926
+Mean accuracy: 0.5638537328995133
+
+4 lr
+Accuracy for task 1: 0.5691747572815534
+Accuracy for task 2: 0.5712530712530712
+Accuracy for task 3: 0.5267080745341615
+Accuracy for task 4: 0.576499388004896
+Mean accuracy: 0.5609088227684206
+
+12 lr
+Accuracy for task 1: 0.5910194174757282
+Accuracy for task 2: 0.581081081081081
+Accuracy for task 3: 0.5503105590062112
+Accuracy for task 4: 0.5960832313341493
+Mean accuracy: 0.5796235722242924
+
+
+
+12. svm
+Accuracy for task 1: 0.5974801061007957
+Accuracy for task 2: 0.6128391793514228
+Accuracy for task 3: 0.5212201591511937
+Accuracy for task 4: 0.5883520847121112
+Mean accuracy: 0.5799728823288808
+
+
+32, svm
+Accuracy for task 1: 0.6061007957559682
+Accuracy for task 2: 0.6187954996690933
+Accuracy for task 3: 0.6047745358090185
+Accuracy for task 4: 0.599602911978822
+Mean accuracy: 0.6073184358032255
