@@ -1,0 +1,6 @@
+python src/train.py 4 3 #task 4, subject 3
+
+python src/predict.py 4 3 #task 4, subject 3
+
+python src/main.py
+
