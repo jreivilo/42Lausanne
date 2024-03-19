@@ -11,7 +11,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from mne.decoding import CSP
 import argparse
 from joblib import dump
-
+from csp import CustomCSP
 
 BASELINE = [1, 2]
 TASK_1 = [3, 7, 11]	
@@ -46,7 +46,7 @@ def get_file_names(subject, task_number):
     return file_names
 
 def create_pipeline():
-    csp = CSP(n_components=6, reg=None, log=True, norm_trace=False)
+    csp = CustomCSP(n_components=6)
     lr = LogisticRegression(random_state=42)
     pipeline = make_pipeline(csp, lr)
     return pipeline
