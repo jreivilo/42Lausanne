@@ -6,7 +6,6 @@ import argparse
 from termcolor import colored, cprint
 from network.create import create_network
 
-from data_loader import load_data
 from graph import plot_graphs
 from utils import print_args
 
@@ -27,6 +26,21 @@ def split_data(df):
     y_train = y_train.astype(np.float64)
     X_test = X_test.astype(np.float64)
     y_test = y_test.astype(np.float64)
+    
+    #save the data to a csv file
+    X_train.to_csv('data/X_train.csv', index=False)
+    y_train.to_csv('data/y_train.csv', index=False)
+    X_test.to_csv('data/X_test.csv', index=False)
+    y_test.to_csv('data/y_test.csv', index=False)
+    
+    return X_train, X_test, y_train, y_test
+
+def load_data():
+    X_train = pd.read_csv('data/X_train.csv')
+    y_train = pd.read_csv('data/y_train.csv')
+    X_test = pd.read_csv('data/X_test.csv')
+    y_test = pd.read_csv('data/y_test.csv')
+    
     return X_train, X_test, y_train, y_test
 
 def relu(x):
@@ -73,7 +87,7 @@ def softmax_derivative(x):
 def forward_propagation(network, input_data):
     layer_outputs = [input_data]
     for i, layer in enumerate(network):
-        weighted_sum = np.dot(layer_outputs[-1], layer['weights']) #+ layer['biases']
+        weighted_sum = np.dot(layer_outputs[-1], layer['weights']) + layer['biases']
         if i == len(network) - 1:  # Last layer
             activation = softmax(weighted_sum)
         else:
@@ -132,7 +146,7 @@ def apply_gradients(network, batch_gradients, learning_rate):
         network[i]['biases'] -= learning_rate * batch_gradients[i]['bias_grad']
     return network
 
-def train_network(network, xtrain, ytrain, xval, yval, num_epochs, learning_rate, batch_size):
+def train_network(network, xtrain, ytrain, xval, yval, num_epochs, learning_rate, batch_size, early_stopping):
     # Convert to NumPy arrays
     xtrain = xtrain.values
     ytrain = ytrain.values
@@ -180,12 +194,35 @@ def train_network(network, xtrain, ytrain, xval, yval, num_epochs, learning_rate
         validation_losses.append(val_loss)
         validation_accuracies.append(val_accuracy)
 
-        print(f'Epoch {epoch+1}/{num_epochs}, Training Loss: {training_loss:.5f}, Validation Loss: {val_loss:.5f}')
-        # exit()
-    # Plotting
+        #implement early stopping 
+        if epoch > early_stopping:
+            if validation_losses[-1] > validation_losses[-(early_stopping + 1)]:
+                print(f'Early stopping at epoch {epoch}')
+                break
+
+        print(f'Epoch {epoch+1}/{num_epochs}, Training Loss: {training_loss:.5f}, Validation Loss: {val_loss:.5f}, Training Accuracy: {training_accuracy:.5f}, Validation Accuracy: {val_accuracy:.5f}')
+        
+        #save training and validation losses to a csv file
+        np.save('data/training_losses.npy', training_losses)
+        np.save('data/validation_losses.npy', validation_losses)
+
     plot_graphs(training_losses, validation_losses, training_accuracies, validation_accuracies)
+    
+    #load training and validation losses
+    training_losses = np.load('data/training_losses.npy')
+    validation_losses = np.load('data/validation_losses.npy')
 
     return network
+
+def print_model_architecture(layers, activation='relu', output_activation='softmax'):
+    print("\nModel Architecture")
+    print("----------------------------")
+    print(f"{'Layer':<15}{'Output Shape':<20}{'Activation':<15}")
+    print("----------------------------")
+    for i, neurons in enumerate(layers):
+        act = activation if i < len(layers) - 1 else output_activation
+        print(f"{'Layer ' + str(i+1):<15}{str(neurons):<20}{act:<15}")
+    print("----------------------------\n")
 
 
 #main
@@ -196,15 +233,24 @@ if __name__ == "__main__":
     parser.add_argument('--loss', type=str, help='Loss function', required=True)
     parser.add_argument('--batch_size', type=int, help='Batch size', required=True)
     parser.add_argument('--learning_rate', type=float, help='Learning rate', required=True)
+    parser.add_argument('--early_stopping', type=int, help='Early stopping', required=False, default=parser.parse_args().epochs+1)
 
     args = parser.parse_args()
     print_args(args)
 
     network = create_network(args.layer)
     
-    df = load_data('data/data.csv')
-    X_train, X_val, y_train, y_val = split_data(df)
+    # X_train, X_val, y_train, y_val = split_data(df)
+    X_train, X_val, y_train, y_val = load_data()
     
     print(f"Shape of X_train: {X_train.shape}")
 
-    network = train_network(network, X_train, y_train, X_val, y_val, args.epochs, args.learning_rate, args.batch_size)
+    network = train_network(network, X_train, y_train, X_val, y_val, args.epochs, args.learning_rate, args.batch_size, args.early_stopping)
+    
+    #print model architexture in a pretty way
+    print_model_architecture(args.layer)
+
+    #save the model
+    np.save('model.npy', network)
+    
+    
