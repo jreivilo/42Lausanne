@@ -195,7 +195,7 @@ def train_network(network, xtrain, ytrain, xval, yval, num_epochs, learning_rate
         validation_accuracies.append(val_accuracy)
 
         #implement early stopping 
-        if epoch > early_stopping:
+        if early_stopping is not None and early_stopping < epoch:
             if validation_losses[-1] > validation_losses[-(early_stopping + 1)]:
                 print(f'Early stopping at epoch {epoch}')
                 break
@@ -233,7 +233,7 @@ if __name__ == "__main__":
     parser.add_argument('--loss', type=str, help='Loss function', required=True)
     parser.add_argument('--batch_size', type=int, help='Batch size', required=True)
     parser.add_argument('--learning_rate', type=float, help='Learning rate', required=True)
-    parser.add_argument('--early_stopping', type=int, help='Early stopping', required=False, default=parser.parse_args().epochs+1)
+    parser.add_argument('--early_stopping', type=int, help='Early stopping', required=False, default=None)
 
     args = parser.parse_args()
     print_args(args)

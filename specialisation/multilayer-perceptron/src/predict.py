@@ -32,5 +32,5 @@ if __name__ == "__main__":
 	
 	#calculate average loss
 	avg_loss = -sum_loss / len(X_test)
-	print(f"Average loss: {avg_loss[1]}")
+	print(f"Binary Cross Entropy Loss: {avg_loss[0]}")
 
