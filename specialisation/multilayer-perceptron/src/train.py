@@ -228,7 +228,7 @@ def print_model_architecture(layers, activation='relu', output_activation='softm
 #main
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a multilayer perceptron")
-    parser.add_argument('--layer', nargs='+', type=int, help='Number of neurons in each layer', required=True)
+    parser.add_argument('--layer', nargs='+', type=int, help='Number of neurons in each layer', required=False, default=[12, 12])
     parser.add_argument('--epochs', type=int, help='Number of epochs', required=True)
     parser.add_argument('--loss', type=str, help='Loss function', required=True)
     parser.add_argument('--batch_size', type=int, help='Batch size', required=True)
