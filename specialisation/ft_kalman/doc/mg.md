@@ -23,3 +23,14 @@ Message from server: [00:00:00.000]DIRECTION
 -0.01027623125104742
 
 Message from server: MSG_END
+
+
+
+
+Printing vehicule
+True position: 807.039 -170.309 -33.4951 
+Guessed position: 842.876 -197.606 -37.1564 
+Speed: 11.7163 -9.42056 -1.24878 
+Acceleration: -0.177127 -0.15768 -0.00628541 
+Direction: -0.00169388 0.100983 -0.680109 
+Error: -1.7174 -1.73737 -1.89627 
