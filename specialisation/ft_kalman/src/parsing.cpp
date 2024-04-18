@@ -114,8 +114,13 @@ int parse_msg(char* buffer, Vehicule& vehicule) {
 	}
 	if (first_token == "MSG_END")
 	{
-		printf("End of message\n\n");
+		// printf("End of message\n\n");
 		return -1;
+	}
+	if (first_token == "GOODBYE.")
+	{
+		printf("Goodbye\n\n");
+		return -2;
 	}
 	
 	std::cout << "Message not recognized" << std::endl;

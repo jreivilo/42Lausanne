@@ -20,5 +20,8 @@ Eigen::Matrix<double, 9, 9> init_Q();
 Eigen::Matrix<double, 9, 1> init_Z(Vehicule& vehicule);
 Eigen::Matrix<double, 9, 1> init_X(Vehicule& vehicule);
 
+Eigen::Matrix<double, 9, 9> init_H_ACC();
+Eigen::Matrix<double, 9, 9> init_H_GPS_ACC();
+
 
 #endif

@@ -17,7 +17,7 @@ CXX			=	c++
 LIBS		= eigen
 
 # CXXFLAGS	=	-Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
-CXXFLAGS	=	
+CXXFLAGS	=	-Wall -Wextra -Werror
 
 $(ODIR)/%.o	:	$(SDIR)/%.cpp $(INCS)
 			@mkdir -p $(@D)

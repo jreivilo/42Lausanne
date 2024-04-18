@@ -81,10 +81,31 @@ Eigen::Matrix<double, 9, 9> init_Q() {
     return Q;
 }
 
+Eigen::Matrix<double, 9, 9> init_H_ACC() {
+	//1 for acceleration only
+	Eigen::Matrix<double, 9, 9> H = Eigen::Matrix<double, 9, 9>::Zero();
+	H(2,2) = 1;
+	H(5,5) = 1;
+	H(8,8) = 1;
+	return H;
+}
+
+Eigen::Matrix<double, 9, 9> init_H_GPS_ACC() {
+	//1 for acceleration only
+	Eigen::Matrix<double, 9, 9> H = Eigen::Matrix<double, 9, 9>::Zero();
+	H(0,0) = 1;
+	H(2,2) = 1;
+	H(3,3) = 1;
+	H(5,5) = 1;
+	H(6,6) = 1;
+	H(8,8) = 1;
+	return H;
+}
+
 Eigen::Matrix<double, 9, 1> init_Z(Vehicule& vehicule) {
 	Eigen::Matrix<double, 9, 1> Z = Eigen::Matrix<double, 9, 1>::Zero();
 
-std::vector<double> r_speed = { vehicule.speed[0], vehicule.speed[1], vehicule.speed[2] };
+	std::vector<double> r_speed = { vehicule.speed[0], vehicule.speed[1], vehicule.speed[2] };
 	r_speed = rotateVector(r_speed, vehicule.direction[0], vehicule.direction[1], vehicule.direction[2]);
 
 	// Set the specific elements based on the given structure
