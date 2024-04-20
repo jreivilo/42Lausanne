@@ -40,6 +40,18 @@ int check_args(int argc, char* argv[]) {
 		return ERROR;
 	}
 
+	// check number of digits
+	if (port.size() > 5) {
+		std::cerr << "Invalid port: " << port << std::endl;
+		return ERROR;
+	}
+	
+	//check if the port is in the range of the ports
+	if (std::stoi(port) < 1024 || std::stoi(port) > 49151) {
+		std::cerr << "Invalid port: " << port << std::endl;
+		return ERROR;
+	}
+
 	return 0;
 }
 
