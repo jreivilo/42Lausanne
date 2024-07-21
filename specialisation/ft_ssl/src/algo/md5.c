@@ -237,3 +237,64 @@ static void Decode(unsigned int *output, const unsigned char *input, unsigned in
         output[i] = ((unsigned int)input[j]) | (((unsigned int)input[j+1]) << 8) |
                     (((unsigned int)input[j+2]) << 16) | (((unsigned int)input[j+3]) << 24);
 }
+
+// UTIls
+void transform_md5(unsigned char *digest, char *hex_output) {
+	for (int i = 0; i < 16; i++) {
+		hex_output[i*2] = "0123456789abcdef"[digest[i] / 16];
+		hex_output[i*2 + 1] = "0123456789abcdef"[digest[i] % 16];
+	}
+	hex_output[32] = '\0';
+}
+
+void process_md5_stdin(ft_flags flags)
+{
+	char buffer[BUFFER_SIZE];
+	int bytes_read;
+	MD5_CTX context;
+	MD5Init(&context);
+
+	while ((bytes_read = read(STDIN, buffer, BUFFER_SIZE)) > 0) {
+		buffer[bytes_read] = '\0';
+		MD5Update(&context, (unsigned char*) buffer, bytes_read);
+	}
+	unsigned char digest[16];
+	MD5Final(digest, &context);
+
+	char hex_output[33];
+	transform_md5(digest, hex_output);
+	print_algo(hex_output, buffer, "md5", flags, true, false);
+}
+
+void process_md5_input(char *input, bool is_string, ft_flags flags) {
+    MD5_CTX context;
+    MD5Init(&context);
+    unsigned char digest[16];
+    char buffer[BUFFER_SIZE];
+    int bytes_read;
+
+    if (is_string) {
+        MD5Update(&context, (unsigned char*)input, ft_strlen(input));
+    } 
+	else {
+        int fd = open(input, O_RDONLY);
+		if (fd < 0) {
+			write_file_or_directory_error("md5", input);
+			return;
+		}
+        while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0) {
+            MD5Update(&context, (unsigned char*)buffer, bytes_read);
+        }
+        close(fd);
+    }
+    MD5Final(digest, &context);
+
+	char hex_output[33];
+	transform_md5(digest, hex_output);
+
+    if (is_string) {
+		print_algo(hex_output, input, "md5", flags, false, false);
+	} else {
+		print_algo(hex_output, input, "md5", flags, false, true);
+	}
+}

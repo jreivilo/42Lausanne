@@ -1,4 +1,4 @@
-SRCS = src/main.c src/parsing_arg.c src/parsing_algo.c src/algo/md5.c src/print.c
+SRCS = src/main.c src/parsing_arg.c src/parsing_algo.c src/algo/md5.c src/print.c src/error.c src/algo/sha256.c
 OBJS_DIR = obj
 OBJS = $(addprefix $(OBJS_DIR)/,$(notdir $(SRCS:.c=.o)))
 LIBFT_DIR = libft

@@ -9,7 +9,7 @@ int check_number_of_arguments(int argc) {
 }
 
 int check_command(const char *cmd) {
-    if (strcmp(cmd, "md5") != 0) {
+    if (strcmp(cmd, "md5") != 0 && strcmp(cmd, "sha256") != 0) {
         write(STDERR, "ft_ssl: Error: '", 16);
 		write(STDERR, cmd, strlen(cmd));
 		write(STDERR, "' is an invalid command.\n\nStandard commands:\n\nMessage Digest commands:\nmd5\n\nCipher commands:\n", 85);

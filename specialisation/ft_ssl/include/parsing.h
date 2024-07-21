@@ -9,6 +9,6 @@ int check_command(const char *cmd);
 int get_flags(int argc, char *argv[], ft_flags *flags, int *is_file_or_string);
 int parse_flags(int argc, char *argv[], ft_flags *flags, char **file_names, int *file_count);
 
-void process_md5(int argc, char *argv[], ft_flags flags, int is_file_or_string);
+void process_algo(int argc, char *argv[], char *algo, ft_flags flags, int is_file_or_string);
 
 #endif

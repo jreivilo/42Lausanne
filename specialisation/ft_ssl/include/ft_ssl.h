@@ -15,12 +15,16 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <string.h>
+#include <stdint.h>
 
 #include <flag.h>
 #include <parsing.h>
-#include <md5.h>
 #include <print.h>
+#include <error.h>
 
-# include "../libft/libft.h"
+#include <md5.h>
+#include <sha256.h>
+
+#include "../libft/libft.h"
 
 #endif
