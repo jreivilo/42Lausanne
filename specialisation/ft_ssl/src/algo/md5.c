@@ -293,8 +293,8 @@ void process_md5_input(char *input, bool is_string, ft_flags flags) {
 	transform_md5(digest, hex_output);
 
     if (is_string) {
-		print_algo(hex_output, input, "md5", flags, false, false);
+		print_algo(hex_output, input, "MD5", flags, false, false);
 	} else {
-		print_algo(hex_output, input, "md5", flags, false, true);
+		print_algo(hex_output, input, "MD5", flags, false, true);
 	}
 }

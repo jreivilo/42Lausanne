@@ -180,7 +180,7 @@ void process_sha256_input(char *input, bool is_string, ft_flags flags) {
     sha256_init(state, &buffstate);
 
     if (is_string) {
-        sha256_update(state, &buffstate, (unsigned char *)input, strlen(input));
+        sha256_update(state, &buffstate, (unsigned char *)input, ft_strlen(input));
     } else {
         while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0) {
 			buffer[bytes_read] = '\0';
@@ -195,8 +195,8 @@ void process_sha256_input(char *input, bool is_string, ft_flags flags) {
     transform_sha256(digest, hex_output);
 
     if (is_string) {
-        print_algo(hex_output, input, "sha256", flags, false, false);
+        print_algo(hex_output, input, "SHA256", flags, false, false);
     } else {
-        print_algo(hex_output, input, "sha256", flags, false, true);
+        print_algo(hex_output, input, "SHA256", flags, false, true);
     }
 }

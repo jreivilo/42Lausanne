@@ -2,7 +2,8 @@
 
 int check_number_of_arguments(int argc) {
 	if (argc < 2) {
-		write(STDERR, "usage: ft_ssl command [flags] [file/string]", 42);
+		write(STDERR, "usage: ft_ssl command [flags] [file/string]", 43);
+		write(STDERR, "\n", 1);
 		return ERROR;
 	}
 	return SUCCESS;
