@@ -53,7 +53,7 @@ def load_test_data(test_dir, batch_size=1):
     test_datagen = ImageDataGenerator(rescale=1.0/255,
                                       preprocessing_function=extract_leaf)
     test_generator = test_datagen.flow_from_directory(test_dir,
-                                                      batch_size=batch_size1,
+                                                      batch_size=batch_size,
                                                       class_mode='sparse', 
                                                       target_size=(250, 250),
                                                       shuffle=False)

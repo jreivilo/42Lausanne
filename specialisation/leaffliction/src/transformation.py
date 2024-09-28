@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 import cv2
+import argparse
 
 def convert_to_grayscale(original_image):
     gray_image = pcv.rgb2gray(original_image)
@@ -50,32 +51,36 @@ def historgam_pixel_intensity(original_image, mask):
     
     
 
-# Usage Example
-file_path = 'images/Apple/Apple_healthy/image (1).JPG'
-original_image = cv2.imread(file_path)
+if __name__ == "__main__":
+	parser = argparse.ArgumentParser(description="Apply various augmentations to an image.")
+	parser.add_argument("file_path", type=str, help="Path to the image file to be augmented")
+	args = parser.parse_args()
 
-gray_image = convert_to_grayscale(original_image)
-cv2.imwrite('plot/transformation/gray_image.png', gray_image)
+	file_path = args.file_path
+	original_image = cv2.imread(file_path)
 
-binary_image = thresholding_for_leaf_shape(gray_image)
-cv2.imwrite('plot/transformation/binary_image.png', binary_image)
+	gray_image = convert_to_grayscale(original_image)
+	cv2.imwrite('plot/transformation/gray_image.png', gray_image)
 
-leaf_image = extract_leaf_shape(original_image, binary_image)
-cv2.imwrite('plot/transformation/leaf_image.png', leaf_image)
+	binary_image = thresholding_for_leaf_shape(gray_image)
+	cv2.imwrite('plot/transformation/binary_image.png', binary_image)
 
-leaf_shape_green_background = add_leaf_image_green_to_original_image(original_image, leaf_image)
-cv2.imwrite('plot/transformation/leaf_shape_green_background.png', leaf_shape_green_background)
+	leaf_image = extract_leaf_shape(original_image, binary_image)
+	cv2.imwrite('plot/transformation/leaf_image.png', leaf_image)
 
-leaf_shape_analysis = analyse_leaf_shape(original_image, binary_image)
-cv2.imwrite('plot/transformation/leaf_shape_analysis.png', leaf_shape_analysis)
+	leaf_shape_green_background = add_leaf_image_green_to_original_image(original_image, leaf_image)
+	cv2.imwrite('plot/transformation/leaf_shape_green_background.png', leaf_shape_green_background)
 
-# leaf_marked_image = acute_marking(original_image, binary_image)
-# # pcv.plot_image(leaf_marked_image, title="Leaf Marked Image")
+	leaf_shape_analysis = analyse_leaf_shape(original_image, binary_image)
+	cv2.imwrite('plot/transformation/leaf_shape_analysis.png', leaf_shape_analysis)
 
-edges = pcv.canny_edge_detect(original_image)
-cv2.imwrite('plot/transformation/edges.png', edges)
+	# leaf_marked_image = acute_marking(original_image, binary_image)
+	# # pcv.plot_image(leaf_marked_image, title="Leaf Marked Image")
+
+	edges = pcv.canny_edge_detect(original_image)
+	cv2.imwrite('plot/transformation/edges.png', edges)
 
 
-hist_figure, hist_data = historgam_pixel_intensity(original_image, binary_image)
-hist_figure.save('plot/transformation/hist_figure.png')
-# np.savetxt("plot/transformation/hist_data.csv", hist_data, delimiter=",")
+	hist_figure, hist_data = historgam_pixel_intensity(original_image, binary_image)
+	hist_figure.save('plot/transformation/hist_figure.png')
+	# np.savetxt("plot/transformation/hist_data.csv", hist_data, delimiter=",")

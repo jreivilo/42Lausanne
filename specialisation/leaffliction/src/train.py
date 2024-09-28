@@ -7,7 +7,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 import shutil
 import cv2
-from utils.process_augment import copy_and_process_images
+from augmentation import copy_and_process_images
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
 
@@ -124,16 +124,18 @@ def extract_leaf(original_image):
 
 if __name__ == "__main__":
     
-    # split_data_into_train_test('images', 'train', 'test')
+    copy_and_process_images('images', 'images_transformed')
     
-    #clean the directories
+    split_data_into_train_test('images', 'train', 'test')
+    
+    # # #clean the directories
     shutil.rmtree('images_transformed')
-    #create the directories
+    # # #create the directories
     os.makedirs('images_transformed', exist_ok=True)
 
     model = build_model()
     
-    # Compile the model
+    # # Compile the model
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     model.summary()
     

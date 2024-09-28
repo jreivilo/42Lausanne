@@ -1,0 +1,19 @@
+download leaf images and extract them here
+
+///////////
+
+conda create --name leafliction-env python=3.10.14
+conda activate leafliction-env
+
+pip install poetry
+poetry install
+
+////
+
+python src/distribution.py images
+
+python src/augmentation.py images/Apple_Black_rot/image\ \(10\).JPG 
+
+python src/train.py
+
+python src/predict.py
