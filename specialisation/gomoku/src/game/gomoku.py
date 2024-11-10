@@ -20,6 +20,17 @@ class Gomoku:
 
 	### RULES AND GAME LOGIC ###
 
+	def copy(self):
+		"""Create a copy of the current game state."""
+		copy = Gomoku(self.board_size)
+		copy.board = np.copy(self.board)
+		copy.current_player = self.current_player
+		copy.white_player_pebbles_taken = self.white_player_pebbles_taken
+		copy.black_player_pebbles_taken = self.black_player_pebbles_taken
+		copy.forced_moves = self.forced_moves
+		copy.game_over = self.game_over
+		return copy
+
 	def is_move_forbidden(self, move_pos):
 		"""Check if the move is forbidden based on Gomoku rules."""
 		row, col = move_pos['row'], move_pos['col']

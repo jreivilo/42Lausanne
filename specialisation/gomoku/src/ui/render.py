@@ -55,11 +55,10 @@ def plot_gomoku_board_interactive_with_player_info(gomoku):
 
 				# Update the game state
 				gomoku.board[row, col] = gomoku.current_player
-				gomoku.check_capture_and_update({"row": row, "col": col})
-
-				if gomoku.is_move_forbidden ({"row": row, "col": col}):
-					print("Forbidden move: double three")
-					return
+				if not gomoku.check_capture_and_update({"row": row, "col": col}) : #return 1 if there is a capture
+					if gomoku.is_move_forbidden ({"row": row, "col": col}):
+						print("Forbidden move: double three")
+						return
 				draw_game_state()
 
 
@@ -75,8 +74,6 @@ def plot_gomoku_board_interactive_with_player_info(gomoku):
 				# Switch the player
 				gomoku.current_player = -gomoku.current_player
 
-	
-		#TODO ADD Coup algo ici a terme. Pour le moment cest 1 vs 1
 
 	# Setting up the plot
 	fig, ax = plt.subplots(figsize=(10, 8))  # Slightly wider figure to accommodate labels
