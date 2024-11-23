@@ -50,23 +50,31 @@ class SnakeGameGUI:
 				# Draw the cell
 				self.canvas.create_rectangle(x1, y1, x2, y2, fill=color, outline="black")
 
-	def run(self, use_q_learning=False):
+	def run(self, train=False, num_episodes=1000, model_path='model/q_values_1000.json', want_visual=False, save_model=None, step_by_step=False):
 		# Move the snake every 0.5 second
-		if use_q_learning:
+		if train == False:
 			while self.game.is_game_over == False and self.game.is_won == False:
 				print(f"Won: {self.game.is_won}, Game Over: {self.game.is_game_over}")
 				time.sleep(0.1)
 				# Load Q-values and disable learning
-				self.game.agent.load_q_values(filename='q_values.json')
+				self.game.agent.load_q_values(filename=model_path)
 				self.game.agent.is_learning = False
 
 				state = self.game.agent.get_state(self.game)
 				action = self.game.agent.choose_action(state)
 				self.game.move_snake(action)
-				self.draw_board()
-				self.window.update()
+				if want_visual:
+					self.draw_board()
+					self.window.update()
+    
+				if step_by_step:
+					# Wait for enter in terminal to continue
+					input("Press Enter to continue...")
   
 		else :
+			# Set the agent to learning mode
+			self.game.agent.is_learning = True
+			self.game.agent.num_training_episodes = num_episodes
 			while self.game.agent.num_training_episodes > 0:
 				# time.sleep(0.5)
 				state = self.game.agent.get_state(self.game)
@@ -78,8 +86,15 @@ class SnakeGameGUI:
 				next_state = self.game.agent.get_state(self.game)
 				self.game.agent.update(state, action, reward)
 
-				# print(f"Action: {action}, Reward: {reward}")
-				# self.game.move_snake()
-				# self.draw_board()
-				# self.window.update()
-				# time.sleep(0.01)
+				if want_visual:
+					self.draw_board()
+					self.window.update()
+
+				# Wait for enter in terminal to continue
+				if step_by_step:
+					input("Press Enter to continue...")
+
+			if save_model:
+				self.game.agent.save_q_values(filename=save_model, is_final=True)
+			else:
+				self.game.agent.save_q_values(filename=f"q_values_{num_episodes}.json", is_final=True)

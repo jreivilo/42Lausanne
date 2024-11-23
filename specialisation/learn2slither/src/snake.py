@@ -4,13 +4,14 @@ import tkinter as tk
 from src.qlearning import QLearningAgent
 
 class SnakeGame:
-	def __init__(self):
-		self.board_size = 10  # 10x10 grid
+	def __init__(self, board_size=10):
+		self.board_size = board_size
 		self.snake = []  # List of tuples representing the snake's body
 		self.green_apples = set()  # Set of green apple positions
 		self.red_apple = None  # Red apple position
 		self.is_game_over = False
 		self.is_won = False
+		self.max_duration = 0
 
 		# Initialize snake and apples on the board
 		self.initialize_snake()
@@ -88,7 +89,7 @@ class SnakeGame:
 			self.green_apples.remove(new_head)
 			self.place_green_apple()
 			# Check if the snake is long enough to win
-			if len(self.snake) > 10:
+			if len(self.snake) >= 10:
 				self.is_won = True
 				return 'game_won'
 			return 'green_apple'
@@ -128,7 +129,7 @@ class SnakeGame:
 
 		if result == 'game_over':
 			# if self.agent.is_learning == False:
-			print(f"Game Over! You hit a wall or yourself. Your score is {len(self.snake)}")
+			print(f"Game Over! You hit a wall or yourself. Your score is {len(self.snake)} and max duration of {self.max_duration}")
 			self.is_game_over = True
 			if self.agent.num_training_episodes > 0 and self.agent.is_learning == True:
 				# print("Is learning: ", self.agent.is_learning)
@@ -143,7 +144,7 @@ class SnakeGame:
 		elif result == 'game_won':
 			self.is_won = True
 			# if self.agent.is_learning == False:
-			print(f"Congratulations! You won the game with a score of {len(self.snake)}")
+			print(f"Congratulations! You won the game with a score of {len(self.snake)} and max duration of {self.max_duration}")
 			if self.agent.num_training_episodes > 0 and self.agent.is_learning == True:
 				# print("Is learning: ", self.agent.is_learning)
 				# reset game, not the agent
@@ -155,6 +156,7 @@ class SnakeGame:
 				# save q values
 				print(f"Training episodes left: {self.agent.num_training_episodes}")
 
+		self.max_duration += 1
 		return result
 
 	def get_board_state(self):

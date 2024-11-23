@@ -1,3 +1,9 @@
 conda create -n snake python=3.11
 conda activate snake
 
+python main.py --visual --use_model model/q_values_100.json
+
+python main.py --visual --train --num_episodes 1000     
+
+python main.py --visual --train --num_episodes 1000 --save_model a.json
+python main.py --visual --use_model q_values_100.json --step_by_step  

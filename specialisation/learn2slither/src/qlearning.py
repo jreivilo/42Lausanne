@@ -177,15 +177,16 @@ class QLearningAgent:
 		updated_q_value = current_q_value + self.alpha * (reward - current_q_value)
 		self.q_values[(state, action)] = updated_q_value
 
-	def save_q_values(self, filename):
-		# Save the Q-values to a file
-		with open(filename, 'w') as f:
-			for (state, action), value in self.q_values.items(): 
+	def save_q_values(self, filename, is_final=False):
+		# Save the Q-values to a file in the "model" folder
+		filepath = f'model/{filename}' if is_final else f'model/tmp_{filename}'
+		with open(filepath, 'w') as f:
+			for (state, action), value in self.q_values.items():
 				f.write(f'{state},{action},{value}\n')
 
 	def load_q_values(self, filename):
 		# Load the Q-values from a file
-		with open(filename, 'r') as f:
+		with open(f"model/{filename}", 'r') as f:
 			for line in f:
 				state_str, action, value = line.strip().rsplit(',', 2)
 				state = ast.literal_eval(state_str)  # Convert string to tuple safely
