@@ -1,20 +1,28 @@
-# Vulnérabilité : MIME Spoofing
+## Header Tampering
 
-## Description
-La faille MIME Spoofing consiste à faire croire à un serveur qu’un fichier uploadé est d’un certain type (par exemple une image), alors qu’il ne l’est pas réellement. Cela peut permettre de téléverser des fichiers malveillants tels que des scripts exécutables.
+En changeant les headers de vos requetes, vous pouvez acceder a du contenu ou des acces qui sont censer etre confidentiels, dans des sites mal configures.
+Encore une fois curl va nous permettre de faire ces requetes modifier, mais des outils d'interception de requetes tels que burp suite permette de faire pareil et plus de choses.
 
-## Exploitation
-Un attaquant peut exploiter cette faille en modifiant le type MIME du fichier via des outils comme `curl`, tout en envoyant un fichier contenant du code malveillant. Par exemple, un fichier `.php` peut être déguisé en image (`image/jpeg`) et exécuté si le serveur est vulnérable.  
+### Trouver le flag
+Tout en bas de la page d'accueil, on peut cliquer sur BornToSec dans le footer, ce qui nous redirige sur une page avec des albatros. En ayant la console ouverte en regardant le html, on voit les commentaires suivants (cachés par d'autres commentaires avec du lorem ipsum et une tonne de whitespace):
+<!--
+You must come from : "https://www.nsa.gov/".
+-->
+<!--
+Let's use this browser : "ft_bornToSec". It will help you a lot.
+-->
 
-Le MIME type n'est pas comme une extension de fichier. L'extension du fichier est utiliser par l'OS pour determiner comment executer/render le fichier, mais le type MIME est envoyer dans des requetes en tout genre pour indiquer aux sites a quel format il faut s'attendre. On peut tout simplement leur dire qu'on envoie quelque chose de different que la realite, par exemple envoyer un script et dire que c'est une image jpeg comme ci-dessous
+C'est un indice pour nous indiquer de changer les headers pour dire qu'on a ete rediriger sur ce site depuis la page nsa.gov (ce qui veut dire, pour le site, que l'on vient d'une page safe, meme si c'est faux), et dire que l'on utilise le browser ft_bornToSec (pas trop sur de l'impact dangereux de cette derniere modif).
+
+Les options curl que l'on utilise sont les suivantes:
+- `-H` pour rajouter un headers: `-H "Referer: https://www.nsa.gov/"`
+- `-A` pour indiquer le brwoser utiliser pour la requete: `-A "ft_bornToSec"`
+- ensuite l'url de la page
+- ensuite ca renvoie tout le html de la page, mais avec le flag rajouter, donc on pipe ca dans 'grep flag' et boom on a (the msuic playing when you load the page is a hint to find the flag)
+```html
+    0<center><h2 style="margin-top:50px;"> The flag is : f2a29020ef3132e01dd61df97fd33ec8d7fcd1388cc9601e7db691d17d4d6188</h2><br/><img src="images/win.png" alt="" width=200px height=200px></center> <audio id="best_music_ever" src="audio/music.mp3"preload="true" loop="loop" autoplay="autoplay">
 ```
-    RESPONSE=$(curl -s -X POST \
-        -F "uploaded=@${MALICIOUS_SCRIPT};type=image/jpeg" \
-        -F "Upload=Upload" "$TARGET_URL")
-```
 
-## Correctifs
-1. **Validation stricte du contenu** : Vérifier le contenu réel des fichiers uploadés (par exemple, vérifier la structure interne des images).
-2. **Limiter les extensions autorisées** : Refuser les fichiers contenant des extensions ou types potentiellement dangereux.
-3. **Désactiver l’exécution** : Configurer le serveur pour empêcher l'exécution des fichiers uploadés dans les répertoires de destination.
-4. **Renommer les fichiers uploadés** : Remplacer les extensions dangereuses par des extensions inoffensives (e.g., `.txt`).
+Dans burp suite il s'agirait juste d'allumer l'intercepteur, de loader la page, et ensuite vu qu'elle est bloquer on peut changer les headers directement en plaintext dans burp, et envoyer la requete modifier, donnant le meme resultat.
+
+Quand on decrypte le flag avec sha256 sur dcode.fr (incroyable ce site, marche mieux que tout les autres qui ont plein de pubs), on obtient la string: `albatroz`
