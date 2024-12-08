@@ -4,7 +4,7 @@ Ce formulaire contient un champ caché `mail` avec une valeur définie à `webma
 
 ### Exemple d'exploitation
 1. Ouvrir les outils de développement du navigateur (clic droit > Inspecter).
-2. Modifier la valeur du champ caché à `attacker@example.com`.
+2. Modifier la valeur du champ caché à `attacker@example.com` ou une autre addresse (qui vous appartient, pour recuperer les infos/acces).
 3. Soumettre le formulaire pour envoyer cette nouvelle valeur.
 
 #### Conséquences :
