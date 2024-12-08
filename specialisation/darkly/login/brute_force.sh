@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # URL of the login page
-url="http://192.168.56.101/index.php?page=signin"
+url="http://192.168.129.219/index.php?page=signin"
 
 # Check if the wordlists are available
 if [[ ! -f usernames.txt ]] || [[ ! -f passwords.txt ]]; then
