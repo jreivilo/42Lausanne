@@ -52,7 +52,7 @@ def scrapping_recursive(url):
             elif final_link != "../":
                 scrapping_recursive(url + final_link)
 
-url = "http://192.168.129.219//.hidden/"
+url = "http://192.168.129.219/.hidden/"
 scrapping_recursive(url)
 ```
 
