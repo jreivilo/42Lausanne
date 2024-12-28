@@ -1,0 +1,9 @@
+myawesomescript.sh
+
+This script retrieves the final URL behind a given bit.ly link.
+
+Usage:
+  ./myawesomescript.sh <bit.ly URL>
+
+Example:
+  ./myawesomescript.sh https://bit.ly/49XAiop
